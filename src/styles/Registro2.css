@@ -1,0 +1,64 @@
+html, body, #root{
+    padding: 0;
+    margin: 0;
+    height: 100%;
+  }
+
+.main{
+    width: 60%;
+    position: relative;
+    top: 30px;
+    background-image: url(../images/caballo.jpg);
+}
+
+.formularioContenedor{
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.logo{
+    width: 200px;
+}
+
+.botonInicioSesion{
+    background-color: rgb(61, 61, 61) ;
+    color: #fff;
+    padding: 5px 5px 5px 5px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.textCuenta{
+    padding: 5px;
+    margin-right: 5px;
+    margin-bottom: 0px;
+    color: white;
+    font-size: 14px;
+}
+
+
+.loginContenedor{
+    margin-left: 110px;
+    margin-top: 10px;
+}
+
+.textHeader{
+    width: 60%;
+    text-align: center;
+    color: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {  }
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {  }
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {  }
+
+/*Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {  }

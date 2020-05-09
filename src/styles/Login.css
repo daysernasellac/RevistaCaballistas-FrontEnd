@@ -1,0 +1,266 @@
+html, body, #root{
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+body{
+  background-color: #000000;
+}
+
+/*Contenedores*/
+
+.formLogin{
+  width: 50%;
+  position: relative;
+  top: 13%;
+  margin-left: 10% ;
+}
+.containerImg{
+  margin-left: 5%;
+  height: 100%;
+  width: 45%;
+  float: left;
+}
+.containerForm{
+  margin-right: 5%;
+  height: 100%;
+  width: 45%;
+  float: right;
+}
+.mainLogin{
+  width: 100%;
+  height: 100%;
+}
+.containerMainForm{
+  background-color: white;
+}
+.groupInputLogin{
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  text-align: center;
+}
+.containerSubmit{
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  text-align: center;
+}
+.groupImg{
+  position: relative
+}
+.userCont{
+  margin-bottom: 8px;
+}
+
+/*Imagenes*/
+
+.hourseImg{
+  width: 70%;
+  margin-left: 20%;
+}
+.imgUserIcon{
+  width: 30px;
+  height: 30px;
+}
+.imgLogoBlanco{
+  width: 80%;
+  margin-bottom: 20px;
+}
+.imgMadera{
+  width: 100%;
+  height: 80px;
+  bottom: 200px;
+}
+
+/*Elementos*/
+
+.inputCorreoLogin, .inputContrasena {
+  margin: 5px;
+  text-align: center;
+  width: 70%;
+}
+.submitLogin{
+  width: 70%;
+  background-color: black;
+  color: white;
+  border: black;
+  padding: 3px;
+}
+.submitLogin:hover{
+  background-color: darkgrey;
+}
+.link-pass{
+  font-size: 12px;
+}
+.errorEmail{
+  font-size: 14px;
+  color: red;
+  margin-bottom: 10px;
+  display: none;
+}
+
+/*Animacion*/
+
+.inputCorreoLogin, .inputContrasena{
+  border:none;
+  border-bottom:1px solid #757575;
+  text-align: left;
+  width: 200px;
+}
+.groupInput2{
+  position:relative; 
+  margin-bottom:17px;
+}
+.groupInput2:focus {
+  outline:none;
+}
+.labelLogin {
+  color:#999; 
+  font-size:15px;
+  font-weight:normal;
+  position:absolute;
+  pointer-events:none;
+  left:50px;
+  top:5px;
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+/* active state */
+.inputCorreoLogin:focus  ~ .labelLogin, .inputCorreoLogin:valid ~ .labelLogin,
+.inputContrasena:focus  ~ .labelLogin, .inputContrasena:valid ~ .labelLogin {
+  top:-20px;
+  font-size:14px;
+  color:#000;
+}
+.bar2 {
+  position:relative; 
+  display:block;
+  width: 200px; 
+}
+.bar2:before, .bar2:after {
+  content:'';
+  height:2px; 
+  width:0;
+  bottom:4.2px; 
+  position:absolute;
+  background: #B5A001; 
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+.bar2:before {
+  left:50%;
+}
+.bar2:after {
+  right:0%; 
+}
+.inputCorreoLogin:focus ~ .bar2:before, .inputCorreoLogin:focus ~ .bar2:after,
+.inputContrasena:focus ~ .bar2:before, .inputContrasena:focus ~ .bar2:after
+{
+  width:150px;
+}
+.highlight2 {
+  position:absolute;
+  height:60%; 
+  width:100px; 
+  top:30%; 
+  left:0px;
+  pointer-events:none;
+  opacity:0.5;
+}
+.inputCorreoLogin:focus ~ .highlight2, 
+.inputContrasena:focus ~ .highlight2
+{
+  -webkit-animation:inputHighlighter 0.3s ease;
+  -moz-animation:inputHighlighter 0.3s ease;
+  animation:inputHighlighter 0.3s ease;
+}
+@-webkit-keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+@-moz-keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+@keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+
+/*Responsive*/
+@media only screen and (max-width: 415px) {
+  .containerImg{
+    display: none;
+  }
+  .containerForm{
+    width: 100%;
+    margin: 0;  
+  }
+  .formLogin{
+    width: 80%;
+    margin: center;
+
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  html, body, #root{
+    padding: 0;
+    margin: 0;
+    height: 100%;
+  }
+  .containerImg{
+    margin: 0;
+    height: 100%;
+    width: 45%;
+    float: left;
+  }
+  .formLogin{
+    width: 80%;
+    margin: center;
+  }
+  .hourseImg{
+    width: 80%;
+    margin-left: 20%;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  html, body, #root{
+    padding: 0;
+    margin: 0;
+    height: 100%;
+  }
+  .containerImg{
+    margin: 0;
+    height: 100%;
+    width: 45%;
+    float: left;
+    padding-top: 10%;
+  }
+  .formLogin{
+    width: 90%;
+    margin: center;
+  }
+  .hourseImg{
+    width: 80%;
+    margin-left: 20%;
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  .containerImg{
+    display: none;
+  }
+  .containerForm{
+    width: 100%;
+    margin: 0;
+  }
+  .formLogin{
+    width: 80%;
+    margin: center;
+  }
+}

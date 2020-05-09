@@ -1,0 +1,691 @@
+html, body, #root{
+    padding: 0;
+    margin: 0;
+    height: 100%;
+  }  
+
+
+/*Contenedores*/
+
+.mainRegistry{
+  background-color: #000;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  padding: 55px 10px 10px 10px;
+}
+.contenMain{
+  width: 70%;
+  height: 95%;
+  padding-top: 0%;
+  margin: auto;
+}
+.formRegistry{
+  background-color: white;
+  width: 48%;
+  padding: 0px;
+  margin-right: 1%;
+  display: inline-block;
+}
+.selectTipoNumeroDocumentoCont{
+  width: 100%;
+  margin: auto;
+  height: 30px;
+}
+.groupInputsCont{
+  width: 100%;
+  margin: auto;
+}
+
+.groupInputNombre{
+  width: 49%;
+  float: left;
+  margin-left: 2%;
+}
+.selectTipoDocumentoCont{
+  width: 49%;
+  float: left;
+  margin-left: 2%;
+}
+.inputNumeroDocumentoCont{
+  float: right;
+  width: 47%;
+  margin-right: 2%;
+}
+.groupInputApellido{
+  float: right;
+  width: 47%;
+  margin-right: 2%;
+}
+.textCon{
+  width: 50%;
+  float: right;
+  text-align: center;
+  margin-left: 1%;
+  color: white;
+  font-family: 'PT Sans', sans-serif;
+}
+.group-select {
+  margin: 5px;
+}
+.groupInputNombre , .groupInputApellido, .groupInput{
+  position:relative; 
+  margin-bottom:17px;
+}
+.groupInputNombre:focus, .groupInputApellido:focus, .groupInput:focus {
+  outline:none;
+}
+.selectDepartamentoCiudadCont{
+  width: 422px;
+  margin: auto;
+  height: 30px;
+
+}
+
+/*Elementos*/
+.errorEmailRegistry{
+  color: #fff;
+  font-size: 13px;
+  position: absolute; 
+  right: 370px;
+  width: 200px;
+  bottom: 5px; 
+  border-radius: 3%;
+  background-color: #f3684a;
+  padding: 5px;
+}
+.errorE, .errorN, .errorC, .errorD{
+  margin: 0px;
+}
+
+.errorCelularRegistry{
+  color: #fff;
+  font-size: 13px;
+  position: absolute; 
+  right: 370px;
+  width: 210px;
+  bottom: 5px; 
+  border-radius: 3%;
+  background-color: #f3684a;
+  padding: 5px;
+}
+.errorDireccion{
+  color: #fff;
+  font-size: 13px;
+  position: absolute; 
+  right: 370px;
+  width: 210px;
+  bottom: 5px; 
+  border-radius: 3%;
+  background-color: #f3684a;
+  padding: 5px;
+}
+.errorNombreRegistry{
+  color: #fff;
+  font-size: 13px;
+  position: absolute; 
+  right: 1150px;
+  width: 200px;
+  bottom: 450px; 
+  border-radius: 3%;
+  background-color: #f3684a;
+  padding: 5px;
+}
+.triangunloDireccion{
+  width: 20px;
+  height: 0px;
+  border-top: 10px solid transparent;
+  border-left: 10px solid #f3684a;
+  position: absolute;
+  right: 350px;
+  bottom: 5px;
+}
+.triangunloCelular{
+  width: 20px;
+  height: 0px;
+  border-top: 10px solid transparent;
+  border-left: 10px solid #f3684a;
+  position: absolute;
+  right: 350px;
+  bottom: 5px;
+}
+.triangunloNombre{
+  width: 10px;
+  height: 0px;
+  border-top: 10px solid transparent;
+  border-left: 10px solid #f3684a;
+  position: absolute;
+  right: 220px;
+  bottom: 5px;
+}
+.triangunloEmail{
+  width: 10px;
+  height: 0px;
+  border-top: 10px solid transparent;
+  border-left: 10px solid #f3684a;
+  position: absolute;
+  left: 81px;
+  bottom: 5px;
+}
+.inputNumeroDocumento{
+  float: right;
+  width: 48%;
+  margin-right: 5px;
+  border:none;
+  border-bottom:1px solid #757575;
+  width: 200px;
+  height: 30px;
+}
+.selectTipoDocumento{
+  height: 30px;
+  width: 50%;
+  margin-left: 2px;
+  border:none;
+  border-bottom:1px solid #757575;
+  background: #ffff url("https://image.flaticon.com/icons/png/512/3/3907.png") no-repeat right top;
+  background-size:17px;
+ 	-moz-appearance:none;
+	-webkit-appearance:none;
+	-ms-appearance:none;
+	-o-appearance:none;
+	appearance:none;
+	cursor:pointer;
+}
+.selectDepartamento , .selectCiudad{
+  height: 100%;
+}
+.selectDepartamento {
+  width: 50%;
+  margin-right: 1%;
+  border:none;
+  border-bottom:1px solid #757575;
+  background: #ffff url("https://image.flaticon.com/icons/png/512/3/3907.png") no-repeat right top;
+  background-size:17px;
+ 	-moz-appearance:none;
+	-webkit-appearance:none;
+	-ms-appearance:none;
+	-o-appearance:none;
+	appearance:none;
+	cursor:pointer;
+}
+.selectCiudad{
+  width:  48%;
+  margin-left: 1%;
+  border:none;
+  border-bottom:1px solid #757575;
+  background: #ffff url("https://image.flaticon.com/icons/png/512/3/3907.png") no-repeat right top;
+  background-size:17px;
+ 	-moz-appearance:none;
+	-webkit-appearance:none;
+	-ms-appearance:none;
+	-o-appearance:none;
+	appearance:none;
+	cursor:pointer;
+}
+.submitRegistry{
+  width: 35%;
+  background-color: black;
+  color: white;
+  border: black;
+  padding: 3px;
+}
+.submitRegistry:hover{
+  background-color: darkgrey;
+}
+.letter{
+  font-size: 30px;
+  color: #fff;
+}
+.title{
+  font-size: 27px;
+  color: #d6b36a;
+}
+select, .inputNombreC, 
+.inputCelular, .inputCorreo,
+.inputDireccion, .inputApellido {
+  margin-bottom: 5px;
+}
+
+/*Animacion Input*/
+
+.inputNombreC, .inputApellido, .inputNumeroDocumento{
+  border:none;
+  border-bottom:1px solid #757575;
+  text-align: left;
+  width: 200px;
+}
+.selectTipoDocumento{
+  width: 200px;
+}
+.inputCorreo, .inputCelular, .inputDireccion{
+  border:none;
+  border-bottom:1px solid #757575;
+  text-align: left;
+  width: 250px;
+}
+.labelNombre, .labelApellido {
+  color:#999;
+  font-size:15px;
+  font-weight:normal;
+  position:absolute;
+  pointer-events:none;
+  left:15px;
+  top:0px;
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+.labelNumeroDocumento {
+  color:#999;
+  font-size:15px;
+  font-weight:normal;
+  position:absolute;
+  pointer-events:none;
+  left: 33.7%;
+  top:57.2%;
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+.groupInput label{
+  color:#999; 
+  font-size:15px;
+  font-weight:normal;
+  position:absolute;
+  pointer-events:none;
+  left:110px;
+  top:0px;
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+/* active state */
+.inputNombreC:focus  ~ .labelNombre, .inputNombreC:valid ~ .labelNombre,
+.inputApellido:focus  ~ .labelApellido, .inputApellido:valid ~ .labelApellido,
+.inputCorreo:focus ~ .labelCentro, .inputCorreo:valid ~ .labelCentro,
+.inputCelular:focus ~ .labelCentro, .inputCelular:valid ~ .labelCentro,
+.inputDireccion:focus ~ .labelCentro, .inputDireccion:valid ~ .labelCentro,
+.inputNumeroDocumento:focus ~ .labelNumeroDocumento, .inputNumeroDocumento:valid ~ .labelNumeroDocumento{
+
+  top:-20px;
+  font-size:14px;
+  color:#000;
+}
+.barApellido {
+  position:relative; 
+  display:block;
+  width:90px; 
+}
+.barNombre{
+  position:relative; 
+  display:block;
+  width:100px; 
+}
+.barCentro{
+  position:relative; 
+  display:block;
+  width:590px; 
+}
+.barCentro:before {
+  left:32%;
+}
+.barCentro:after {
+  right: 56%; 
+}
+
+.barNumeroDocumento{
+  position:relative; 
+  display:block;
+  width: 90px; 
+}
+.barNumeroDocumento:before {
+  left: 50%;
+}
+.barNumeroDocumento:after {
+  left:  8%; 
+}
+
+.barNombre:before {
+  left:50%;
+}
+.barNombre:after {
+  left: 10%; 
+}
+.barApellido:before {
+  left:50%;
+}
+.barApellido:after {
+  left: 8%; 
+}
+.barNombre:before, .barNombre:after, .barApellido:before, .barApellido:after, .barCentro:before, .barCentro:after, .barNumeroDocumento:before, .barNumeroDocumento:after {
+  content:'';
+  height:2px; 
+  width:0;
+  bottom:4.2px; 
+  position:absolute;
+  background: #B5A001; 
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+.inputNombreC:focus ~ .barNombre:before, .inputNombreC:focus ~ .barNombre:after,
+.inputApellido:focus ~ .barApellido:before, .inputApellido:focus ~ .barApellido:after,
+.inputCorreo:focus ~ .barCentro:before, .inputCorreo:focus ~ .barCentro::after,
+.inputCelular:focus ~ .barCentro:before, .inputCelular:focus ~ .barCentro::after,
+.inputDireccion:focus ~ .barCentro:before, .inputDireccion:focus ~ .barCentro::after
+{
+  width:161px;
+}
+.highlight3, .highlight4 {
+  position:absolute;
+  height:60%; 
+  width:100px; 
+  top:30%; 
+  left:0;
+  pointer-events:none;
+  opacity:0.5;
+}
+.inputNombreC:focus ~ .highlight4, 
+.inputApellido:focus ~ .highlight3,
+.inputCorreo:focus ~ .highlight4,
+.inputCelular:focus ~ .highlight4,
+.inputDireccion:focus ~ .highlight4
+{
+  -webkit-animation:inputHighlighter 0.3s ease;
+  -moz-animation:inputHighlighter 0.3s ease;
+  animation:inputHighlighter 0.3s ease;
+}
+@-webkit-keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+@-moz-keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+@keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+
+/*Imagenes*/
+
+.maderaImg{
+  width: 452px;
+  position: absolute;
+  left: 212px;
+  top: 7px;
+}
+.logoNegro{
+  width: 200px;
+}
+.maderaImg2{
+  width: 452px;
+  position: absolute;
+  left: 212px;
+  top: 545px;
+}
+
+/*Responsive*/
+
+@media only screen and (max-width: 415px) {
+
+  .inputCorreo, .inputCelular, .inputDireccion, .inputNombreC, .inputApellido{
+    border:none;
+    border-bottom:1px solid #757575;
+    text-align: left;
+    width: 85%;
+  } 
+  .inputNombreC, .inputApellido{
+    border:none;
+    border-bottom:1px solid #757575;
+    text-align: left;
+    width: 90%;
+  }
+  .mainRegistry{
+    background-color: #000;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding: 25px 0px 10px 0px;
+  }
+  .contenMain{
+    width: 100%;
+    height: 100%;
+    margin: auto;
+  }
+  .groupInput{
+    display: block;
+  }
+  .formRegistry{
+    background-color: white;
+    width: 100%;
+    padding-top: 10px;
+    display: block;
+    margin: auto;
+  }
+  .selectTipoNumeroDocumentoCont{
+    width: 100%;
+    margin: auto;
+    height: 100px;
+  }
+  .groupInputsCont{
+    width: 100%;
+    display: inline-block;
+  }
+  .groupInputNombre, .groupInputApellido{
+    width: 50%;
+    margin: auto;
+    position: relative;
+    margin-bottom: 17px;
+  }
+  .separador{
+    display: none;
+  }
+  .title{
+    font-size: 20px;
+  }
+  .letter{
+    font-size: 25px;
+  }
+  .textCon{
+    width: 100%;
+    text-align: center;
+    color: white;
+    padding: 5px;
+    font-family: 'PT Sans', sans-serif;
+  }
+  .group-select {
+    margin: 5px;
+  }
+  
+  .maderaImg{
+    width: 100%;
+    position: absolute;
+    left: 0%;
+    top: 0px;
+  }
+  .logoNegro{
+    width: 160px;
+  }
+  .maderaImg2{
+    width: 100%;
+    position: absolute;
+    left: 0%;
+    top: 580px;
+  }
+  .labelNombre, .labelApellido {
+    color:#999;
+    font-size:13px;
+    font-weight:normal;
+    position:absolute;
+    pointer-events:none;
+    left:10%;
+    top:0px;
+    transition:0.2s ease all; 
+    -moz-transition:0.2s ease all; 
+    -webkit-transition:0.2s ease all;
+  }
+  .groupInput label{
+    color:#999; 
+    font-size:13px;
+    font-weight:normal;
+    position:absolute;
+    pointer-events:none;
+    left: 10%;
+    top:0px;
+    transition:0.2s ease all; 
+    -moz-transition:0.2s ease all; 
+    -webkit-transition:0.2s ease all;
+  }
+  .selectTipoDocumento{
+    height: 30px;
+    width: 85%;
+    display: block;
+    margin: auto;
+    margin-bottom: 17px;
+    font-size: 14px;
+    border:none;
+    border-bottom:1px solid #757575;
+    background: #ffff url("https://image.flaticon.com/icons/png/512/3/3907.png") no-repeat right top;
+    background-size:17px;
+     -moz-appearance:none;
+    -webkit-appearance:none;
+    -ms-appearance:none;
+    -o-appearance:none;
+    appearance:none;
+    cursor:pointer;
+  }
+  .inputNumeroDocumento{
+    width: 85%;
+    border:none;
+    float: none;
+    border-bottom:1px solid #757575;
+    height: 30px;
+    margin: auto;
+    display: block;
+  }
+
+  .selectDepartamentoCiudadCont{
+    width: 100%;
+    margin: auto;
+    height: 30px; 
+  }
+  .selectDepartamento {
+    font-size: 14px;
+    width: 46%;
+    margin-right: 1%;
+    border:none;
+    border-bottom:1px solid #757575;
+    background: #ffff url("https://image.flaticon.com/icons/png/512/3/3907.png") no-repeat right top;
+    background-size:17px;
+     -moz-appearance:none;
+    -webkit-appearance:none;
+    -ms-appearance:none;
+    -o-appearance:none;
+    appearance:none;
+    cursor:pointer;
+  }
+  .selectCiudad{
+    font-size: 14px;
+    width:  45%;
+    margin-left: 1%;
+    border:none;
+    border-bottom:1px solid #757575;
+    background: #ffff url("https://image.flaticon.com/icons/png/512/3/3907.png") no-repeat right top;
+    background-size:17px;
+     -moz-appearance:none;
+    -webkit-appearance:none;
+    -ms-appearance:none;
+    -o-appearance:none;
+    appearance:none;
+    cursor:pointer;
+  }
+
+  .barNombre, .barApellido, .barCentro{
+    display: none;
+  }
+
+  .triangunloNombre{
+    width: 10px;
+    height: 0px;
+    border-top: 10px solid transparent;
+    border-left: 10px solid #ffff;
+    position: absolute;
+    right: 240px;
+    bottom: 5px;
+  }
+  .errorN{
+    font-size: 14px;
+    display: inline;
+    margin: 0px;
+    color: #f3684a;
+  }
+  .errorNombreRegistry{
+    position: relative;
+    bottom: 20px;
+    padding: 0px;
+    right: 0px;
+    background-color: #ffff;
+  }
+  .triangunloEmail{
+    width: 10px;
+    height: 0px;
+    border-top: 10px solid transparent;
+    border-left: 10px solid #ffff;
+    position: absolute;
+    left: 81px;
+    bottom: 5px;
+  }
+  .errorEmailRegistry{
+    position: relative;
+    bottom: 7px;
+    padding: 0px;
+    right: 0px;
+    background-color: #ffff;
+  }
+  .errorE{
+    font-size: 14px;
+    display: inline;
+    margin: 0px;
+    color: #f3684a;
+  }
+
+  .triangunloCelular{
+    width: 20px;
+    height: 0px;
+    border-top: 10px solid transparent;
+    border-left: 10px solid #ffff;
+    position: absolute;
+    right: 350px;
+    bottom: 5px;
+  }
+  .errorCelularRegistry{
+    position: relative;
+    bottom: 5px;
+    padding: 0px;
+    right: 0px;
+    background-color: #ffff;
+  }
+  .errorC{
+    font-size: 14px;
+    display: inline;
+    margin: 0px;
+    color: #f3684a;
+  }
+  .errorDireccion{
+    position: relative;
+    bottom: 7px;
+    padding: 0px;
+    right: 0px;
+    background-color: #ffff;
+    z-index: 0;
+  }
+  .errorD{
+    font-size: 14px;
+    display: inline;
+    margin: 0px;
+    color: #f3684a;
+  }
+
+}
