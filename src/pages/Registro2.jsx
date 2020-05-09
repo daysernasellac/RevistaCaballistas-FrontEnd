@@ -21,7 +21,7 @@ class Registro2 extends React.Component {
                     </div>
                 </div>
                 <div className="container textHeader">
-                    <h4>Regístrese gratis y obtén tu Revista!</h4>
+                    <h4>Regístrese gratis y obtén tu Revista! cambio</h4>
                 </div>
                 <form className="formularioContenedor">
                     <div className="form-group">
