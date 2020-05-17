@@ -105,9 +105,7 @@ class Registro2 extends React.Component {
         if (departamentos.length > 0) {
             return departamentos.map(function (departamento, index) {
                 return (
-
                     <option key={index} value={departamento.id_departamento} >{departamento.nombre_departamento}</option>
-
                 )
             })
         }
@@ -129,7 +127,6 @@ class Registro2 extends React.Component {
             })
         }
     }
-
 
 
     handleSubmit(event) {
@@ -357,7 +354,7 @@ class Registro2 extends React.Component {
                     <form className="formularioContenedor" action="" method="POST" onSubmit={this.handleSubmit}>
                         <div className="container inputsContenedor">
                             <div className="form-group">
-                                <label htmlFor="inputNombres">Nombres</label>
+                                <label htmlFor="inputNombres">Nombres <span className="obligatorio">*</span></label>
                                 <input type="text" className={this.state.nombreStateError} id="inputNombres" placeholder="Nombres" onChange={this.handleChangeNombre} value={this.state.value} onBlur={this.handleNombreValidation} />
                                 <div className="invalid-feedback">
                                     Por favor digita tu nombre.
@@ -365,7 +362,7 @@ class Registro2 extends React.Component {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="inputApellido">Apellidos</label>
+                                <label htmlFor="inputApellido">Apellidos <span className="obligatorio">*</span></label>
                                 <input type="text" className={this.state.apellidoStateError} id="inputApellido" placeholder="Apellidos" onChange={this.handleChangeApellido} value={this.state.value} onBlur={this.handleApellidoValidation} />
                                 <div className="invalid-feedback">
                                     Por favor digita tu apellido.
@@ -373,7 +370,7 @@ class Registro2 extends React.Component {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="inputEmail">Email</label>
+                                <label htmlFor="inputEmail">Email <span className="obligatorio">*</span></label>
                                 <input type="email" className={this.state.emailStateError} id="inputEmail" aria-describedby="emailHelp" placeholder="Email" onChange={this.handleChangeEmail} value={this.state.value} onBlur={this.handleEmailValidation} />
                                 <div className="invalid-feedback">
                                     {this.state.mensajeErrorEmail}
@@ -383,7 +380,7 @@ class Registro2 extends React.Component {
                                 </small>
                             </div>
                             <div className="form-group">
-                                <label htmlFor="inputCelularTelefono">Numero de contacto</label>
+                                <label htmlFor="inputCelularTelefono">Numero de contacto <span className="obligatorio">*</span></label>
                                 <InputMask type="text" className={this.state.numeroStateError} mask={this.state.formatoNumero} maskChar="-" id="inputCelularTelefono" aria-describedby="numeroHelp" placeholder="Numero de contacto" onChange={this.handleChangeCelular} value={this.state.value} onBlur={this.handleCelularValidation} onClick={this.formatear} />
                                 <div className="invalid-feedback">
                                     {this.state.mensajeErrorCelular}
@@ -393,7 +390,7 @@ class Registro2 extends React.Component {
                                 </small>
                             </div>
                             <div className="form-group">
-                                <label htmlFor="inputDireccion">Direccion residencial</label>
+                                <label htmlFor="inputDireccion">Direccion residencial <span className="obligatorio">*</span></label>
                                 <input type="text" className={this.state.direccionStateError} id="inputDireccion" placeholder="Direccion residencial" onChange={this.handleChangeDireccion} value={this.state.value} onBlur={this.handleDireccionValidation} />
                                 <div className="invalid-feedback">
                                     {this.state.mensajeErrorDireccion}
@@ -402,7 +399,7 @@ class Registro2 extends React.Component {
 
                             <div className="form-row">
                                 <div className="col-md-6 mb-3">
-                                    <label htmlFor="selectTipoDocumento">Tipo de documento</label>
+                                    <label htmlFor="selectTipoDocumento">Tipo de documento <span className="obligatorio">*</span></label>
                                     <select className={this.state.tipoDocumetoStateError} id="selectTipoDocumento" onChange={this.handleChangeTipoDocumento} value={this.state.value} >
                                         <option defaultValue value=" ">Elegir...</option>
                                         {this.parseTipoDocumento(this.state.tipoDocumentos)}
@@ -410,7 +407,7 @@ class Registro2 extends React.Component {
                                     <div className="invalid-feedback">Selecciona un tipo de documento.</div>
                                 </div>
                                 <div className="col-md-6 mb-3">
-                                    <label htmlFor="inputNumeroDocumento">Numero de documento</label>
+                                    <label htmlFor="inputNumeroDocumento">Numero de documento <span className="obligatorio">*</span></label>
                                     <input type="text" className={this.state.numeroDocumentoStateError} id="inputNumeroDocumento" placeholder="Numero de documento" onChange={this.handleChangeNumeroDocumento} value={this.state.value} onBlur={this.handleNumeroDocumentoValidation} />
                                     <div className="invalid-feedback">
                                         {this.state.mensajeErrorNumeroDocumento}
@@ -420,7 +417,7 @@ class Registro2 extends React.Component {
 
                             <div className="form-row">
                                 <div className="col-md-6 mb-3">
-                                    <label htmlFor="selectDepartamento">Departamento</label>
+                                    <label htmlFor="selectDepartamento">Departamento <span className="obligatorio">*</span></label>
                                     <select className={this.state.departamentoStateError} id="selectDepartamento" onChange={this.handleChangeDepartamento} value={this.state.value} >
                                         <option defaultValue value=" ">Elegir...</option>
                                         {this.parseDepartamentos(this.state.listaDepartamentos)}
@@ -430,7 +427,7 @@ class Registro2 extends React.Component {
                                     </div>
                                 </div>
                                 <div className="col-md-6 mb-3">
-                                    <label htmlFor="selectCiudad">Ciudad</label>
+                                    <label htmlFor="selectCiudad">Ciudad <span className="obligatorio">*</span></label>
                                     <select className={this.state.ciudadStateError} id="selectCiudad" onChange={this.handleChangeCiudad} value={this.state.value}  >
                                         <option defaultValue value=" ">Elegir...</option>
                                     </select>

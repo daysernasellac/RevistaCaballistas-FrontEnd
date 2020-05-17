@@ -54,6 +54,9 @@ label{
 .logo{
     width: 200px;
 }
+.obligatorio{
+    color: red;
+}
 
 .botonInicioSesion{
     background-color: rgb(61, 61, 61) ;

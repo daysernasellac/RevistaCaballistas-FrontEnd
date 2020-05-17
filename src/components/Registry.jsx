@@ -31,6 +31,8 @@ class Registry extends React.Component {
         this.handleDireccionValidation = this.handleDireccionValidation.bind(this);
     }
 
+    
+
     handleEmailValidation(event) {
         if (/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(event.target.value)) {
             this.setState({
