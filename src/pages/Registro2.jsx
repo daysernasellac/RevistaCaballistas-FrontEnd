@@ -1,10 +1,9 @@
 import React from 'react'
 import '../styles/Registro2.css'
 import logoBlanco from '../images/logo_blanco.png'
-import hourse from '../images/caballo.jpg'
 import { Link } from 'react-router-dom'
 import InputMask from 'react-input-mask';
-
+import axios from 'axios';
 
 
 class Registro2 extends React.Component {
@@ -40,7 +39,10 @@ class Registro2 extends React.Component {
             mensajeErrorEmail: '',
             mensajeErrorCelular: '',
             mensajeErrorDireccion: '',
-            mensajeErrorNumeroDocumento: ''
+            mensajeErrorNumeroDocumento: '',
+
+            tipoDocumentos: {},
+            listaDepartamentos: {}
 
         }
 
@@ -59,11 +61,56 @@ class Registro2 extends React.Component {
         this.handleChangeCiudad = this.handleChangeCiudad.bind(this);
 
         this.handleCelularValidation = this.handleCelularValidation.bind(this);
+        this.handleEmailValidation = this.handleEmailValidation.bind(this);
+        this.handleDireccionValidation = this.handleDireccionValidation.bind(this);
+        this.handleNumeroDocumentoValidation = this.handleNumeroDocumentoValidation.bind(this);
+        this.handleNombreValidation = this.handleNombreValidation.bind(this);
+        this.handleApellidoValidation = this.handleApellidoValidation.bind(this);
         this.formatear = this.formatear.bind(this);
     }
 
     componentDidMount() {
         window.addEventListener('scroll', this.handleScroll);
+
+        axios.get('http://localhost:8030/api/core/tipoDocumentos')
+            .then(res => {
+                const tipoDocumentos = res.data;
+                this.setState({ tipoDocumentos });
+            })
+            .catch(error => {
+                console.log(error)
+            });
+
+        axios.get('http://localhost:8030/api/core/departamentos')
+            .then(res => {
+                const listaDepartamentos = res.data;
+                this.setState({ listaDepartamentos });
+            })
+            .catch(error => {
+                console.log(error)
+            });
+    }
+
+    parseTipoDocumento(tipoDocumentos) {
+        if (tipoDocumentos.length > 0) {
+            return tipoDocumentos.map(function (tipoDocumento, index) {
+                return (
+                    <option key={index}>{tipoDocumento.abreviatura}</option>
+                )
+            })
+        }
+    }
+
+    parseDepartamentos(departamentos) {
+        if (departamentos.length > 0) {
+            return departamentos.map(function (departamento, index) {
+                return (
+
+                    <option key={index} value={departamento.id_departamento} >{departamento.nombre_departamento}</option>
+
+                )
+            })
+        }
     }
 
     componentWillUnmount() {
@@ -83,28 +130,29 @@ class Registro2 extends React.Component {
         }
     }
 
+
+
     handleSubmit(event) {
-        //Validacion campos vacios
-        if (this.state.nombres === '') {
+        //Validacion campos
+        if (this.state.nombres === '' || this.state.nombreStateError === "form-control is-invalid") {
             this.setState({ nombreStateError: "form-control is-invalid" })
             event.preventDefault()
         }
-        if (this.state.apellidos === '') {
+        if (this.state.apellidos === '' || this.state.apellidoStateError === "form-control is-invalid") {
             this.setState({ apellidoStateError: "form-control is-invalid" })
             event.preventDefault()
         }
-        if (this.state.email === '') {
+        if (this.state.email === '' || this.state.emailStateError === "form-control is-invalid") {
             this.setState({ emailStateError: "form-control is-invalid" })
             this.setState({ mensajeErrorEmail: "Por favor digita tu email." })
             event.preventDefault()
         }
-        if (this.state.numeroContacto === '') {
+        if (this.state.numeroContacto === '' || this.state.numeroStateError === "form-control is-invalid") {
             this.setState({ numeroStateError: "form-control is-invalid" })
             this.setState({ mensajeErrorCelular: "Por favor digita tu numero." })
-
             event.preventDefault()
         }
-        if (this.state.direccion === '') {
+        if (this.state.direccion === '' || this.state.direccionStateError === "form-control is-invalid") {
             this.setState({ direccionStateError: "form-control is-invalid" })
             this.setState({ mensajeErrorDireccion: "Por favor digita tu direccion." })
             event.preventDefault()
@@ -113,7 +161,7 @@ class Registro2 extends React.Component {
             this.setState({ tipoDocumetoStateError: "custom-select is-invalid" })
             event.preventDefault()
         }
-        if (this.state.numeroDocumento === '') {
+        if (this.state.numeroDocumento === '' || this.state.numeroDocumentoStateError === "form-control is-invalid") {
             this.setState({ numeroDocumentoStateError: "form-control is-invalid" })
             this.setState({ mensajeErrorNumeroDocumento: "Por favor digita tu numero de documento." })
             event.preventDefault()
@@ -126,7 +174,87 @@ class Registro2 extends React.Component {
             this.setState({ ciudadStateError: "custom-select is-invalid" })
             event.preventDefault()
         }
-        //Validacion formatos campos
+
+    }
+
+    handleApellidoValidation(event) {
+        if (event.target.value !== " ") {
+            this.setState({ apellidoStateError: "form-control" })
+        }
+    }
+
+    handleNombreValidation(event) {
+        if (event.target.value !== " ") {
+            this.setState({ nombreStateError: "form-control" })
+        }
+    }
+
+    handleDireccionValidation(event) {
+        if (event.target.value.length < 10 && event.target.value.length !== 0) {
+            this.setState({
+                direccionStateError: "form-control is-invalid",
+                mensajeErrorDireccion: "La dirreccion debe tener minimo 10 caracteres."
+            })
+        } else {
+            if (event.target.value.length === 0) {
+                this.setState({
+                    direccionStateError: "form-control is-invalid",
+                    mensajeErrorDireccion: "Por favor digita tu direccion."
+                })
+            } else {
+                this.setState({
+                    direccionStateError: "form-control",
+                    mensajeErrorDireccion: " "
+                })
+            }
+        }
+
+    }
+
+    handleNumeroDocumentoValidation(event) {
+        if (event.target.value.length >= 8 && /^\d*$/.test(event.target.value) || event.target.value.length === 11 && /^\d*$/.test(event.target.value)) {
+            this.setState({
+                numeroDocumentoStateError: "form-control",
+                mensajeErrorNumeroDocumento: " "
+            })
+        } else {
+            if (event.target.value.length !== 0) {
+                this.setState({
+                    numeroDocumentoStateError: "form-control is-invalid",
+                    mensajeErrorNumeroDocumento: "Numero de documento invalido."
+                })
+
+            } else {
+                this.setState({
+                    numeroDocumentoStateError: "form-control is-invalid",
+                    mensajeErrorNumeroDocumento: "Por favor digita tu numero de documento."
+                })
+            }
+
+        }
+
+    }
+
+    handleEmailValidation(event) {
+        if (/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(event.target.value)) {
+            this.setState({
+                emailStateError: "form-control",
+                mensajeErrorEmail: ""
+            })
+        } else {
+            if (event.target.value === "") {
+                this.setState({
+                    mensajeErrorEmail: 'Por favor digita tu email.',
+                    emailStateError: "form-control is-invalid"
+                })
+            } else {
+                this.setState({
+                    mensajeErrorEmail: 'El email no es válido.',
+                    emailStateError: "form-control is-invalid"
+                })
+            }
+
+        }
 
     }
 
@@ -155,9 +283,14 @@ class Registro2 extends React.Component {
                 })
             }
         } else {
-            if (event.target.value.length < 7 || event.target.value.length === 8 || event.target.value.length === 9) {
+            if (event.target.value.length < 7 && event.target.value.length !== 0 || event.target.value.length > 10 || event.target.value.length === 8 || event.target.value.length === 9) {
                 this.setState({
                     mensajeErrorCelular: 'El celular ó telefono no es válido.',
+                    numeroStateError: "form-control is-invalid"
+                })
+            } else {
+                this.setState({
+                    mensajeErrorCelular: 'Por favor digita tu numero.',
                     numeroStateError: "form-control is-invalid"
                 })
             }
@@ -195,9 +328,10 @@ class Registro2 extends React.Component {
     }
     handleChangeDepartamento(event) {
         this.setState({ departamento: event.target.value });
+        console.log(this.state.departamento);
     }
     handleChangeCiudad(event) {
-        this.setState({ departamento: event.target.value });
+        this.setState({ ciudad: event.target.value });
     }
 
     render() {
@@ -224,7 +358,7 @@ class Registro2 extends React.Component {
                         <div className="container inputsContenedor">
                             <div className="form-group">
                                 <label htmlFor="inputNombres">Nombres</label>
-                                <input type="text" className={this.state.nombreStateError} id="inputNombres" placeholder="Nombres" onChange={this.handleChangeNombre} value={this.state.value} />
+                                <input type="text" className={this.state.nombreStateError} id="inputNombres" placeholder="Nombres" onChange={this.handleChangeNombre} value={this.state.value} onBlur={this.handleNombreValidation} />
                                 <div className="invalid-feedback">
                                     Por favor digita tu nombre.
                                 </div>
@@ -232,7 +366,7 @@ class Registro2 extends React.Component {
 
                             <div className="form-group">
                                 <label htmlFor="inputApellido">Apellidos</label>
-                                <input type="text" className={this.state.apellidoStateError} id="inputApellido" placeholder="Apellidos" onChange={this.handleChangeApellido} value={this.state.value} />
+                                <input type="text" className={this.state.apellidoStateError} id="inputApellido" placeholder="Apellidos" onChange={this.handleChangeApellido} value={this.state.value} onBlur={this.handleApellidoValidation} />
                                 <div className="invalid-feedback">
                                     Por favor digita tu apellido.
                                 </div>
@@ -240,7 +374,7 @@ class Registro2 extends React.Component {
 
                             <div className="form-group">
                                 <label htmlFor="inputEmail">Email</label>
-                                <input type="email" className={this.state.emailStateError} id="inputEmail" aria-describedby="emailHelp" placeholder="Email" onChange={this.handleChangeEmail} value={this.state.value} />
+                                <input type="email" className={this.state.emailStateError} id="inputEmail" aria-describedby="emailHelp" placeholder="Email" onChange={this.handleChangeEmail} value={this.state.value} onBlur={this.handleEmailValidation} />
                                 <div className="invalid-feedback">
                                     {this.state.mensajeErrorEmail}
                                 </div>
@@ -250,7 +384,7 @@ class Registro2 extends React.Component {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="inputCelularTelefono">Numero de contacto</label>
-                                <InputMask type="text" className={this.state.numeroStateError} mask={this.state.formatoNumero} maskChar="-" maxLength="10" id="inputCelularTelefono" aria-describedby="numeroHelp" placeholder="Numero de contacto" onChange={this.handleChangeCelular} value={this.state.value} onBlur={this.handleCelularValidation} onClick={this.formatear} />
+                                <InputMask type="text" className={this.state.numeroStateError} mask={this.state.formatoNumero} maskChar="-" id="inputCelularTelefono" aria-describedby="numeroHelp" placeholder="Numero de contacto" onChange={this.handleChangeCelular} value={this.state.value} onBlur={this.handleCelularValidation} onClick={this.formatear} />
                                 <div className="invalid-feedback">
                                     {this.state.mensajeErrorCelular}
                                 </div>
@@ -260,7 +394,7 @@ class Registro2 extends React.Component {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="inputDireccion">Direccion residencial</label>
-                                <input type="text" className={this.state.direccionStateError} id="inputDireccion" placeholder="Direccion residencial" onChange={this.handleChangeDireccion} value={this.state.value} />
+                                <input type="text" className={this.state.direccionStateError} id="inputDireccion" placeholder="Direccion residencial" onChange={this.handleChangeDireccion} value={this.state.value} onBlur={this.handleDireccionValidation} />
                                 <div className="invalid-feedback">
                                     {this.state.mensajeErrorDireccion}
                                 </div>
@@ -269,15 +403,15 @@ class Registro2 extends React.Component {
                             <div className="form-row">
                                 <div className="col-md-6 mb-3">
                                     <label htmlFor="selectTipoDocumento">Tipo de documento</label>
-                                    <select className={this.state.tipoDocumetoStateError} id="selectTipoDocumento" onChange={this.handleChangeTipoDocumento} value={this.state.value}>
-                                        <option defaultValue>Elegir...</option>
-
+                                    <select className={this.state.tipoDocumetoStateError} id="selectTipoDocumento" onChange={this.handleChangeTipoDocumento} value={this.state.value} >
+                                        <option defaultValue value=" ">Elegir...</option>
+                                        {this.parseTipoDocumento(this.state.tipoDocumentos)}
                                     </select>
-                                    <div class="invalid-feedback">Selecciona un tipo de documento.</div>
+                                    <div className="invalid-feedback">Selecciona un tipo de documento.</div>
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <label htmlFor="inputNumeroDocumento">Numero de documento</label>
-                                    <input type="text" className={this.state.numeroDocumentoStateError} id="inputNumeroDocumento" placeholder="Numero de documento" onChange={this.handleChangeNumeroDocumento} value={this.state.value} />
+                                    <input type="text" className={this.state.numeroDocumentoStateError} id="inputNumeroDocumento" placeholder="Numero de documento" onChange={this.handleChangeNumeroDocumento} value={this.state.value} onBlur={this.handleNumeroDocumentoValidation} />
                                     <div className="invalid-feedback">
                                         {this.state.mensajeErrorNumeroDocumento}
                                     </div>
@@ -288,7 +422,8 @@ class Registro2 extends React.Component {
                                 <div className="col-md-6 mb-3">
                                     <label htmlFor="selectDepartamento">Departamento</label>
                                     <select className={this.state.departamentoStateError} id="selectDepartamento" onChange={this.handleChangeDepartamento} value={this.state.value} >
-                                        <option defaultValue>Elegir...</option>
+                                        <option defaultValue value=" ">Elegir...</option>
+                                        {this.parseDepartamentos(this.state.listaDepartamentos)}
                                     </select>
                                     <div className="invalid-feedback">
                                         Selecciona un departamento.
@@ -296,8 +431,8 @@ class Registro2 extends React.Component {
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <label htmlFor="selectCiudad">Ciudad</label>
-                                    <select className={this.state.ciudadStateError} id="selectCiudad" onChange={this.handleChangeCiudad} value={this.state.value}>
-                                        <option defaultValue>Elegir...</option>
+                                    <select className={this.state.ciudadStateError} id="selectCiudad" onChange={this.handleChangeCiudad} value={this.state.value}  >
+                                        <option defaultValue value=" ">Elegir...</option>
                                     </select>
                                     <div className="invalid-feedback">
                                         Selecciona una ciudad.
