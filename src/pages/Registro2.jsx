@@ -42,7 +42,8 @@ class Registro2 extends React.Component {
             mensajeErrorNumeroDocumento: '',
 
             tipoDocumentos: {},
-            listaDepartamentos: {}
+            listaDepartamentos: {},
+            listaMunicipios: {}
 
         }
 
@@ -89,6 +90,10 @@ class Registro2 extends React.Component {
             .catch(error => {
                 console.log(error)
             });
+
+
+
+
     }
 
     parseTipoDocumento(tipoDocumentos) {
@@ -106,6 +111,19 @@ class Registro2 extends React.Component {
             return departamentos.map(function (departamento, index) {
                 return (
                     <option key={index} value={departamento.id_departamento} >{departamento.nombre_departamento}</option>
+
+                )
+            })
+        }
+    }
+
+
+
+    parseMunicipios(municipios) {
+        if (municipios.length > 0) {
+            return municipios.map(function (municipios, index) {
+                return (
+                    <option key={index} value={municipios.id_municipio} >{municipios.nombre_municipios}</option>
                 )
             })
         }
@@ -128,6 +146,19 @@ class Registro2 extends React.Component {
         }
     }
 
+    onClickPrueba(event) {
+        console.log("Id " + event.target.value);
+        axios.get('http://localhost:8030/api/core/municipios/:tipo_departamento',
+            event.target.value)
+            .then(res => {
+                console.log(this.state.departamento)
+                const listaMunicipios = res.data;
+                this.setState({ listaMunicipios });
+            })
+            .catch(error => {
+                console.log(error)
+            });
+    }
 
     handleSubmit(event) {
         //Validacion campos
@@ -418,7 +449,7 @@ class Registro2 extends React.Component {
                             <div className="form-row">
                                 <div className="col-md-6 mb-3">
                                     <label htmlFor="selectDepartamento">Departamento <span className="obligatorio">*</span></label>
-                                    <select className={this.state.departamentoStateError} id="selectDepartamento" onChange={this.handleChangeDepartamento} value={this.state.value} >
+                                    <select className={this.state.departamentoStateError} onClick={this.onClickPrueba} id="selectDepartamento" onChange={this.handleChangeDepartamento} value={this.state.value} >
                                         <option defaultValue value=" ">Elegir...</option>
                                         {this.parseDepartamentos(this.state.listaDepartamentos)}
                                     </select>
@@ -430,6 +461,7 @@ class Registro2 extends React.Component {
                                     <label htmlFor="selectCiudad">Ciudad <span className="obligatorio">*</span></label>
                                     <select className={this.state.ciudadStateError} id="selectCiudad" onChange={this.handleChangeCiudad} value={this.state.value}  >
                                         <option defaultValue value=" ">Elegir...</option>
+                                        {this.parseMunicipios(this.state.listaMunicipios)}
                                     </select>
                                     <div className="invalid-feedback">
                                         Selecciona una ciudad.
