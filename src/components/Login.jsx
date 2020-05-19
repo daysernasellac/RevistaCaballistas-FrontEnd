@@ -81,7 +81,7 @@ class Login extends React.Component {
                             </div>
                             <br />
                             <div className="containerSubmit">
-                                <Link to="/Login2">
+                                <Link to="/home">
                                     <input type="submit" value="Ingresar" className="submitLogin" />
                                 </Link>
                                 <br />
