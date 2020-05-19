@@ -5,20 +5,57 @@ html, body, #root{
   }
 
 .main{
-    width: 60%;
+    width: 750px;
     position: relative;
     top: 30px;
-    background-image: url(../images/caballo.jpg);
+    
+}
+
+label{
+    font-size: 15px;
+}
+
+.wrapper{
+    padding: 0px;
+    background-image: url(../images/caballo6.png);
+    background-repeat: no-repeat;
+    background-position: 50% 0%;
+}
+
+.submitContenedor{
+    margin-top: 10px;
+}
+
+.submit{
+    width: 300px;
+    background-color: black;
+    border: 1px black solid;
+}
+
+
+.headerContenedor{
+    margin-bottom: 30px;
+}
+
+.inputsContenedor{
+    width: 80%;
+    padding-top: 20px;
 }
 
 .formularioContenedor{
     background-color: white;
     padding: 10px;
     border-radius: 5px;
+    width: 95%;
+    margin: auto;
+    padding-bottom: 30px;
 }
 
 .logo{
     width: 200px;
+}
+.obligatorio{
+    color: red;
 }
 
 .botonInicioSesion{
@@ -39,7 +76,7 @@ html, body, #root{
 
 
 .loginContenedor{
-    margin-left: 110px;
+    margin-left: 75px;
     margin-top: 10px;
 }
 
@@ -48,17 +85,109 @@ html, body, #root{
     text-align: center;
     color: white;
     padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 30px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 /*Small devices (landscape phones, 576px and up)*/
-@media (min-width: 576px) {  }
+@media only screen and (max-width: 585px) { 
+    
+    .columnaImg{
+        width: 40%;
+    }
+    .columnaLogin{
+        width: 60%;
+    }
+    .loginContenedor{
+        margin-left: 40%;
+    }
+
+    .submit{
+        width: 200px;
+        background-color: black;
+        border: 1px black solid;
+    }
+ }
 
 /*Medium devices (tablets, 768px and up)*/
-@media (min-width: 768px) {  }
+@media only screen and (max-width: 767px) { 
+    .main{
+        width: 100%;
+    }
+ }
+
+ @media only screen and (max-width: 600px) { 
+    .wrapper{
+        background-image: url(../images/caballo6-recortada.png);
+        background-position: 50% 2%;
+    }
+ }
 
 /*Large devices (desktops, 992px and up)*/
-@media (min-width: 992px) {  }
+@media only screen and (max-width: 992px) { 
+    .textCuenta{
+        display: none;
+    }
+    .loginContenedor{
+        margin-left: 60%;
+    }
+    .botonInicioSesion{
+        padding: 10px 5px 10px 5px;
+    }
+ }
+
+ @media only screen and (max-width: 492px) { 
+    
+    .columnaImg{
+        width: 50%;
+    }
+    .columnaLogin{
+        width: 50%;
+    }
+    .loginContenedor{
+        margin-left: 35%;
+        margin-top: 10px;
+    }
+
+    .logo{
+        margin-top: 7px;
+    }
+
+    .submit{
+        width: 100%;
+        background-color: black;
+        border: 1px black solid;
+    }
+ }
+
+ @media only screen and (max-width: 437px) { 
+    
+    .wrapper{
+        background-image: url(../images/caballo6-recortada.png);
+        background-position: 50% 5%;
+    }
+ }
+
+ @media only screen and (max-width: 418px) { 
+    .wrapper{
+        background-image: url(../images/caballo6-recortada.png);
+        background-position: 100% 5%;
+    }
+ }
+
+ @media only screen and (max-width: 394px) { 
+    
+    .loginContenedor{
+        margin-left: 25%;
+    }
+
+    .logo{
+        margin-top: 15px;
+    }
+    .main{
+        min-width: 360px;
+    }
+ }
 
 /*Extra large devices (large desktops, 1200px and up)*/
 @media (min-width: 1200px) {  }
