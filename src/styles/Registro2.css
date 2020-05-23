@@ -4,6 +4,7 @@ html, body, #root{
     height: 100%;
   }
 
+
 .main{
     width: 750px;
     position: relative;
@@ -20,6 +21,7 @@ label{
     background-image: url(../images/caballo6.png);
     background-repeat: no-repeat;
     background-position: 50% 0%;
+    background-color: black;
 }
 
 .submitContenedor{
@@ -87,6 +89,10 @@ label{
     padding-top: 20px;
     padding-bottom: 30px;
     font-family: Arial, Helvetica, sans-serif;
+}
+
+.textHeader h4{
+    line-height: 1.5;
 }
 
 /*Small devices (landscape phones, 576px and up)*/

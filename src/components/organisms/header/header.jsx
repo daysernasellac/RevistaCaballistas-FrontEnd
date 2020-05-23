@@ -10,7 +10,7 @@ export default function Header(){
     return (
     <div className='o-header'>
         <div>
-            <img src={IMG_BENEFICIO8} />
+            <img src={IMG_BENEFICIO8} alt="image" />
         </div>
         <div class='user' onClick={() => setIsShow(!isShow)} >
             <img src={IMG_USER} />

@@ -1,6 +1,6 @@
 import React from 'react';
 import HomeLayout from "../../components/Layout/home-layout";
-import './home.scss';
+import '../../styles/home.scss';
 import { IMG_REINO_EQUINO, IMG_TARJETA, IMG_BENEFICIO1, 
     IMG_BENEFICIO2, IMG_BENEFICIO3, IMG_BENEFICIO4, IMG_BENEFICIO5, IMG_BENEFICIO6, 
     IMG_BENEFICIO7, IMG_BENEFICIO8, IMG_BENEFICIO9
@@ -62,7 +62,7 @@ export default function HomePage () {
                     <div className='benefs' >
                         {data.map( (dat, index) => (
                             <a target='blank' href={dat.link} key={index} >
-                                <img src={dat.img} />
+                                <img src={dat.img} alt=""/>
                             </a>
                         ) )}
                     </div>

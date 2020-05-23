@@ -473,6 +473,7 @@ class Registro2 extends React.Component {
                             </div>
                         </div>
                     </form>
+                    
                     <br />
                 </div>
             </div>
