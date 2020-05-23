@@ -43,7 +43,8 @@ class Registro2 extends React.Component {
 
             tipoDocumentos: {},
             listaDepartamentos: {},
-            listaMunicipios: {}
+            listaMunicipios: {},
+            departamentoId: "null"
 
         }
 
@@ -68,6 +69,8 @@ class Registro2 extends React.Component {
         this.handleNombreValidation = this.handleNombreValidation.bind(this);
         this.handleApellidoValidation = this.handleApellidoValidation.bind(this);
         this.formatear = this.formatear.bind(this);
+
+        this.onClickDepartamentosSelect = this.onClickDepartamentosSelect.bind(this);
     }
 
     componentDidMount() {
@@ -92,7 +95,26 @@ class Registro2 extends React.Component {
             });
 
 
+    }
 
+    municipiosPostRequest(id_departamento) {
+        if (id_departamento !== " ") {
+            axios.get(`http://localhost:8030/api/core/municipios/${id_departamento}`)
+                .then(res => {
+                    const listaMunicipios = res.data;
+                    this.setState({ listaMunicipios });
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.departamentoId !== "null") {
+            this.municipiosPostRequest(this.state.departamentoId)
+            
+        }
 
     }
 
@@ -117,17 +139,19 @@ class Registro2 extends React.Component {
         }
     }
 
-
-
     parseMunicipios(municipios) {
+        
         if (municipios.length > 0) {
             return municipios.map(function (municipios, index) {
                 return (
-                    <option key={index} value={municipios.id_municipio} >{municipios.nombre_municipios}</option>
+                    <option key={index} value={municipios.id_municipio} >{municipios.nombre_municipio}</option>
+
                 )
             })
         }
     }
+
+
 
     componentWillUnmount() {
         window.removeEventListener('scroll', this.handleScroll);
@@ -146,18 +170,12 @@ class Registro2 extends React.Component {
         }
     }
 
-    onClickPrueba(event) {
-        console.log("Id " + event.target.value);
-        axios.get('http://localhost:8030/api/core/municipios/:tipo_departamento',
-            event.target.value)
-            .then(res => {
-                console.log(this.state.departamento)
-                const listaMunicipios = res.data;
-                this.setState({ listaMunicipios });
+    onClickDepartamentosSelect(event) {
+        if (event.target.value !== "0") {
+            this.setState({
+                departamentoId: event.target.value
             })
-            .catch(error => {
-                console.log(error)
-            });
+        }
     }
 
     handleSubmit(event) {
@@ -356,15 +374,16 @@ class Registro2 extends React.Component {
     }
     handleChangeDepartamento(event) {
         this.setState({ departamento: event.target.value });
-        console.log(this.state.departamento);
     }
     handleChangeCiudad(event) {
         this.setState({ ciudad: event.target.value });
     }
 
     render() {
+
         return (
             <div className="container-fluid wrapper">
+
                 <div className="container-fluid main">
                     <div className="container-fluid sticky-top headerContenedor" style={{ backgroundColor: this.state.backgroundColorHeader }} onScroll={this.handleScroll}>
                         <div className="row">
@@ -449,8 +468,8 @@ class Registro2 extends React.Component {
                             <div className="form-row">
                                 <div className="col-md-6 mb-3">
                                     <label htmlFor="selectDepartamento">Departamento <span className="obligatorio">*</span></label>
-                                    <select className={this.state.departamentoStateError} onClick={this.onClickPrueba} id="selectDepartamento" onChange={this.handleChangeDepartamento} value={this.state.value} >
-                                        <option defaultValue value=" ">Elegir...</option>
+                                    <select className={this.state.departamentoStateError} onClick={this.onClickDepartamentosSelect} id="selectDepartamento" onChange={this.handleChangeDepartamento} value={this.state.value} >
+                                        <option defaultValue value="0">Elegir...</option>
                                         {this.parseDepartamentos(this.state.listaDepartamentos)}
                                     </select>
                                     <div className="invalid-feedback">
@@ -461,7 +480,9 @@ class Registro2 extends React.Component {
                                     <label htmlFor="selectCiudad">Ciudad <span className="obligatorio">*</span></label>
                                     <select className={this.state.ciudadStateError} id="selectCiudad" onChange={this.handleChangeCiudad} value={this.state.value}  >
                                         <option defaultValue value=" ">Elegir...</option>
-                                        {this.parseMunicipios(this.state.listaMunicipios)}
+                                        {
+                                            this.parseMunicipios(this.state.listaMunicipios)
+                                        }
                                     </select>
                                     <div className="invalid-feedback">
                                         Selecciona una ciudad.
@@ -473,7 +494,7 @@ class Registro2 extends React.Component {
                             </div>
                         </div>
                     </form>
-                    
+
                     <br />
                 </div>
             </div>
