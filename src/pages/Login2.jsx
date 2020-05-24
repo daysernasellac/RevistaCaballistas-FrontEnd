@@ -71,7 +71,7 @@ class Login2 extends React.Component {
                             <hr className="separadorInferior" />
 
                             <div className="container-fluid footerLogin">
-                                <p>Aun no tienes una cuenta? <Link to="/Registro2"><b className="linkRegistroLogin">Regístrate</b></Link></p>
+                                <p>Aun no tienes una cuenta? <Link to="/Registro"><b className="linkRegistroLogin">Regístrate</b></Link></p>
                             </div>
 
                         </div>

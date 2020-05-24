@@ -8,9 +8,9 @@ import {BrowserRouter, Swith, Route} from 'react-router-dom'
 function App() {
   return (
     <BrowserRouter>
-      <Route exact path="/Registro2" component={Registro2}/>
+      <Route exact path="/registro" component={Registro2}/>
       <Route exact path="/home" component={HomePage} />
-      <Route exact path="/" component={Login2}/>
+      <Route exact path="/Login" component={Login2}/>
     </BrowserRouter>
   );
 }
