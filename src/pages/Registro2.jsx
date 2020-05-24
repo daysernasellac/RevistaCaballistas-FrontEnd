@@ -373,7 +373,7 @@ class Registro2 extends React.Component {
                             </div>
                             <div className="col-sm columnaLogin">
                                 <div className="d-inline-flex p-2 bd-highlight loginContenedor">
-                                    <p className="textCuenta">¿Ya tienes una cuenta? </p><Link to="/login"><p className="botonInicioSesion">Inicia sesión</p></Link>
+                                    <p className="textCuenta">¿Ya tienes una cuenta? </p><Link to="/"><p className="botonInicioSesion">Inicia sesión</p></Link>
                                 </div>
                             </div>
                         </div>

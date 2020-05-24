@@ -10,7 +10,7 @@ function App() {
     <BrowserRouter>
       <Route exact path="/registro" component={Registro2}/>
       <Route exact path="/home" component={HomePage} />
-      <Route exact path="/Login" component={Login2}/>
+      <Route exact path="/" component={Login2}/>
     </BrowserRouter>
   );
 }
