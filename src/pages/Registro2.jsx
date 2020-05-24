@@ -381,7 +381,6 @@ class Registro2 extends React.Component {
                     <div className="container textHeader">
                         <h4><b>Regístrese gratis y obtén tu Revista!</b></h4>
                     </div>
-
                     <form className="formularioContenedor" action="" method="POST" onSubmit={this.handleSubmit}>
                         <div className="container inputsContenedor">
                             <div className="form-group">
@@ -475,11 +474,9 @@ class Registro2 extends React.Component {
                             </div>
                         </div>
                     </form>
-
                     <br />
                 </div>
             </div>
-
         );
     }
 }
