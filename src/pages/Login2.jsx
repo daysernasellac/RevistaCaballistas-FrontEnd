@@ -64,7 +64,7 @@ class Login2 extends React.Component {
                                 </div>
 
                                 <div className="col text-center submitContenedorLogin">
-                                    <button type="submit" class="btn btn-primary btn-lg btn-block btn-dark submitLogin">Ingresar</button>
+                                    <button type="submit" className="btn btn-primary btn-lg btn-block btn-dark submitLogin">Ingresar</button>
                                 </div>
                             </form>
 

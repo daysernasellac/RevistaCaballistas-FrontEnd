@@ -12,7 +12,6 @@ class Registro2 extends React.Component {
         super(props);
         this.state = {
             backgroundColorHeader: 'none',
-
             //Formatos
             formatoNumero: '',
             //Campos registro
@@ -40,7 +39,7 @@ class Registro2 extends React.Component {
             mensajeErrorCelular: '',
             mensajeErrorDireccion: '',
             mensajeErrorNumeroDocumento: '',
-
+            //objetos request
             tipoDocumentos: {},
             listaDepartamentos: {},
             listaMunicipios: {},
@@ -93,29 +92,6 @@ class Registro2 extends React.Component {
             .catch(error => {
                 console.log(error)
             });
-
-
-    }
-
-    municipiosPostRequest(id_departamento) {
-        if (id_departamento !== " ") {
-            axios.get(`http://localhost:8030/api/core/municipios/${id_departamento}`)
-                .then(res => {
-                    const listaMunicipios = res.data;
-                    this.setState({ listaMunicipios });
-                })
-                .catch(error => {
-                    console.log(error)
-                });
-        }
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (this.state.departamentoId !== "null") {
-            this.municipiosPostRequest(this.state.departamentoId)
-            
-        }
-
     }
 
     parseTipoDocumento(tipoDocumentos) {
@@ -140,7 +116,6 @@ class Registro2 extends React.Component {
     }
 
     parseMunicipios(municipios) {
-        
         if (municipios.length > 0) {
             return municipios.map(function (municipios, index) {
                 return (
@@ -150,8 +125,6 @@ class Registro2 extends React.Component {
             })
         }
     }
-
-
 
     componentWillUnmount() {
         window.removeEventListener('scroll', this.handleScroll);
@@ -175,6 +148,14 @@ class Registro2 extends React.Component {
             this.setState({
                 departamentoId: event.target.value
             })
+            axios.get(`http://localhost:8030/api/core/municipios/${event.target.value}`)
+                .then(res => {
+                    const listaMunicipios = res.data;
+                    this.setState({ listaMunicipios });
+                })
+                .catch(error => {
+                    console.log(error)
+                });
         }
     }
 
