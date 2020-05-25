@@ -4,6 +4,7 @@ import userIcon from '../images/avatar2.png'
 import candadoIcon from '../images/restricted.png'
 import { Link } from 'react-router-dom'
 import { Modal, Button, Form } from 'react-bootstrap'
+import axios from 'axios';
 
 
 class Login2 extends React.Component {
@@ -11,21 +12,53 @@ class Login2 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
             nombreStateError: "form-control",
-            show: false
-
+            show: false,
+            correo: '',
+            constrasena: '',
         }
 
         this.handleModal = this.handleModal.bind(this);
+        this.handleChangeUser = this.handleChangeUser.bind(this);
+        this.handleChangePass = this.handleChangePass.bind(this);
+        this.login = this.login.bind(this);
+        
+    }
 
+    handleChangeUser(event) {
+        this.setState({ correo: event.target.value });
+    }
 
+    handleChangePass(event) {
+        this.setState({ contrasena: event.target.value });
     }
 
     handleModal() {
         this.setState({
             show: !this.state.show
         });
+    }
+
+    login(event) {
+        event.preventDefault();
+        let datos ={
+            correo : this.state.correo,
+            contrasena : this.state.contrasena
+
+        }
+        debugger;
+        axios.post(`http://localhost:8030/api/login/login`, {datos})
+        .then(res => {
+            debugger;
+            if (res.data == "") {
+                console.log("usuario no registrado en la base de datos");
+            } else {
+                    console.log("Ya se encuentra un usuario con ese correo");
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
     render() {
@@ -41,7 +74,7 @@ class Login2 extends React.Component {
                         <div className="container contenedorForm">
                             <h3 className="tituloForm">Ingrese a su cuenta</h3>
 
-                            <form className="formularioLogin">
+                            <form className="formularioLogin" autocomplete="off">
 
                                 <div className="col-sm-12 my-1 groupInputLogin groupEmail">
                                     <label htmlFor="labelEmail" ><b>Email</b></label>
@@ -49,7 +82,7 @@ class Login2 extends React.Component {
                                         <div className="input-group-prepend">
                                             <div className="input-group-text"><img src={userIcon} alt="user" width="18px" /></div>
                                         </div>
-                                        <input type="text" className="form-control" id="labelEmail" placeholder="Email" />
+                                        <input type="text" className="form-control" id="labelEmail" placeholder="Email" onChange={this.handleChangeUser} value={this.state.value} />
                                     </div>
                                 </div>
                                 <hr className="separador" />
@@ -59,12 +92,12 @@ class Login2 extends React.Component {
                                         <div className="input-group-prepend">
                                             <div className="input-group-text"><img src={candadoIcon} alt="candado" width="18px" /></div>
                                         </div>
-                                        <input type="text" className="form-control" id="inputContrasenaLogin" placeholder="Contraseña" />
+                                        <input type="text" className="form-control" id="inputContrasenaLogin" placeholder="Contraseña" onChange={this.handleChangePass} value={this.state.value} />
                                     </div>
                                 </div>
 
                                 <div className="col text-center submitContenedorLogin">
-                                    <button type="submit" className="btn btn-primary btn-lg btn-block btn-dark submitLogin">Ingresar</button>
+                                    <button type="submit" className="btn btn-primary btn-lg btn-block btn-dark submitLogin" onClick={this.login}>Ingresar</button>
                                 </div>
                             </form>
 

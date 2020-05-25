@@ -4,6 +4,8 @@ import logoBlanco from '../images/logo_blanco.png'
 import { Link } from 'react-router-dom'
 import InputMask from 'react-input-mask';
 import axios from 'axios';
+import { registrar, validarCampos } from '../components/registro/registro.service';
+import { Modal, Button, Form } from 'react-bootstrap';
 
 
 class Registro2 extends React.Component {
@@ -43,7 +45,9 @@ class Registro2 extends React.Component {
             tipoDocumentos: {},
             listaDepartamentos: {},
             listaMunicipios: {},
-            departamentoId: "null"
+            departamentoId: "null",
+            informacionCliente: {},
+            id_tipoDocumento: '',
 
         }
 
@@ -70,6 +74,10 @@ class Registro2 extends React.Component {
         this.formatear = this.formatear.bind(this);
 
         this.onClickDepartamentosSelect = this.onClickDepartamentosSelect.bind(this);
+        this.correo = this.correo.bind(this);
+        this.registro = this.registro.bind(this);
+        this.handleModal = this.handleModal.bind(this);
+
     }
 
     componentDidMount() {
@@ -98,7 +106,7 @@ class Registro2 extends React.Component {
         if (tipoDocumentos.length > 0) {
             return tipoDocumentos.map(function (tipoDocumento, index) {
                 return (
-                    <option key={index}>{tipoDocumento.abreviatura}</option>
+                    <option key={index} value={tipoDocumento.id_tipo_documento}>{tipoDocumento.abreviatura}</option>
                 )
             })
         }
@@ -160,52 +168,70 @@ class Registro2 extends React.Component {
     }
 
     handleSubmit(event) {
-        //Validacion campos
-        if (this.state.nombres === '' || this.state.nombreStateError === "form-control is-invalid") {
-            this.setState({ nombreStateError: "form-control is-invalid" })
-            event.preventDefault()
-        }
-        if (this.state.apellidos === '' || this.state.apellidoStateError === "form-control is-invalid") {
-            this.setState({ apellidoStateError: "form-control is-invalid" })
-            event.preventDefault()
-        }
-        if (this.state.email === '' || this.state.emailStateError === "form-control is-invalid") {
-            this.setState({ emailStateError: "form-control is-invalid" })
-            this.setState({ mensajeErrorEmail: "Por favor digita tu email." })
-            event.preventDefault()
-        }
-        if (this.state.numeroContacto === '' || this.state.numeroStateError === "form-control is-invalid") {
-            this.setState({ numeroStateError: "form-control is-invalid" })
-            this.setState({ mensajeErrorCelular: "Por favor digita tu numero." })
-            event.preventDefault()
-        }
-        if (this.state.direccion === '' || this.state.direccionStateError === "form-control is-invalid") {
-            this.setState({ direccionStateError: "form-control is-invalid" })
-            this.setState({ mensajeErrorDireccion: "Por favor digita tu direccion." })
-            event.preventDefault()
-        }
-        if (this.state.tipoDocumento === '') {
-            this.setState({ tipoDocumetoStateError: "custom-select is-invalid" })
-            event.preventDefault()
-        }
-        if (this.state.numeroDocumento === '' || this.state.numeroDocumentoStateError === "form-control is-invalid") {
-            this.setState({ numeroDocumentoStateError: "form-control is-invalid" })
-            this.setState({ mensajeErrorNumeroDocumento: "Por favor digita tu numero de documento." })
-            event.preventDefault()
-        }
-        if (this.state.departamento === '') {
-            this.setState({ departamentoStateError: "custom-select is-invalid" })
-            event.preventDefault()
-        }
-        if (this.state.ciudad === '') {
-            this.setState({ ciudadStateError: "custom-select is-invalid" })
-            event.preventDefault()
-        }
+        event.preventDefault();
 
+        //Validacion campos
+        let formErrors = validarCampos(this.state);
+        if(formErrors.length <= 0) {
+            this.setState(formErrors);
+        }
+        
+        registrar(this.state)
+            .then((res) => {
+                if (res.data == "") {
+                    this.correo(this.state.nombres, this.state.apellidos, this.state.email, this.state.numeroContacto, this.state.direccion, this.state.tipoDocumento,
+                        this.state.numeroDocumento, this.state.departamento, this.state.ciudad)
+                } else {
+                    console.log("Ya se encuentra un usuario con esa identificación")
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            });
     }
 
+    correo(nombres, apellidos, correo, telefono, dirrecion, id_tipo_documento, numero_documento, id_departamento, id_municipio) {
+        axios.get(`http://localhost:8030/api/register/informacionCliente/correo/${correo}`)
+            .then(res => {
+                if (res.data == "") {
+                    this.registro(nombres, apellidos, correo, telefono, dirrecion, id_tipo_documento, numero_documento, id_departamento, id_municipio);
+                } else {
+                    console.log("Ya se encuentra un usuario con ese correo");
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            });
+    }
+
+    registro(nombres, apellidos, correo, telefono, dirrecion, id_tipo_documento, numero_documento, id_departamento, id_municipio) {
+        const user = {
+            id_cliente: 0,
+            tipo_documento: id_tipo_documento,
+            numero_documento: numero_documento,
+            nombres: nombres,
+            apellidos: apellidos,
+            telefono: telefono,
+            direccion: dirrecion,
+            id_departamento: id_departamento,
+            id_municipio: id_municipio,
+            correo: correo
+        };
+        axios.post(`http://localhost:8030/api/register/`, { user })
+            .then(res => {
+                if (res.data == "") {
+                    debugger;
+                    console.log("good");
+                } else {
+                    console.log("Ya se encuentra un usuario con ese correo");
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            });
+    }
     handleApellidoValidation(event) {
-        if (event.target.value !== " ") {
+        if (event.target.value !== "") {
             this.setState({ apellidoStateError: "form-control" })
         }
     }
@@ -360,6 +386,12 @@ class Registro2 extends React.Component {
         this.setState({ ciudad: event.target.value });
     }
 
+    handleModal() {
+        this.setState({
+            show: !this.state.show
+        });
+    }
+
     render() {
 
         return (
@@ -381,7 +413,7 @@ class Registro2 extends React.Component {
                     <div className="container textHeader">
                         <h4><b>Regístrese gratis y obtén tu Revista!</b></h4>
                     </div>
-                    <form className="formularioContenedor" action="" method="POST" onSubmit={this.handleSubmit}>
+                    <form className="formularioContenedor">
                         <div className="container inputsContenedor">
                             <div className="form-group">
                                 <label htmlFor="inputNombres">Nombres <span className="obligatorio">*</span></label>
@@ -470,11 +502,20 @@ class Registro2 extends React.Component {
                                 </div>
                             </div>
                             <div className="col text-center submitContenedor">
-                                <button type="submit" className="btn btn-primary submit">Submit</button>
+                                <button type="button" className="btn btn-primary submit" onClick={this.handleSubmit}>Guardar</button>
                             </div>
                         </div>
                     </form>
                     <br />
+                    <Modal show={this.state.show} onHide={this.handleModal} centered>
+                        <Modal.Header centered><b>Ya casi!</b></Modal.Header>
+                        <Modal.Body>
+                            <div class="text-center">Por favor revisa tu correo ({this.state.email})</div>
+                            <div class="text-center">
+                                para confirmar tu cuenta y establecer una contraseña de ingreso.
+                                    </div>
+                        </Modal.Body>
+                    </Modal>
                 </div>
             </div>
         );
