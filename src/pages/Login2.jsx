@@ -60,6 +60,10 @@ class Login2 extends React.Component {
                 console.log(error)
             })
     }
+  
+    componentDidMount(){
+        document.title = "Login"
+    }
 
     render() {
         return (
