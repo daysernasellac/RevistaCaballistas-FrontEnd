@@ -28,6 +28,10 @@ class Login2 extends React.Component {
         });
     }
 
+    componentDidMount(){
+        document.title = "Login"
+    }
+
     render() {
         return (
             <div className="container-fluid wrapper2">

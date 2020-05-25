@@ -75,6 +75,8 @@ class Registro2 extends React.Component {
     componentDidMount() {
         window.addEventListener('scroll', this.handleScroll);
 
+        document.title = "Registro"
+
         axios.get('http://localhost:8030/api/core/tipoDocumentos')
             .then(res => {
                 const tipoDocumentos = res.data;
@@ -381,7 +383,7 @@ class Registro2 extends React.Component {
                     <div className="container textHeader">
                         <h4><b>Regístrese gratis y obtén tu Revista!</b></h4>
                     </div>
-                    <form className="formularioContenedor" action="" method="POST" onSubmit={this.handleSubmit}>
+                    <form className="formularioContenedor" autocomplete="off" action="" method="POST" onSubmit={this.handleSubmit}>
                         <div className="container inputsContenedor">
                             <div className="form-group">
                                 <label htmlFor="inputNombres">Nombres <span className="obligatorio">*</span></label>
