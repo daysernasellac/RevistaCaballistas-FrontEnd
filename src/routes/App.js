@@ -1,5 +1,5 @@
 import React from 'react';
-import Login2 from './../pages/Login2';
+import Login from './../pages/Login';
 import Registro2 from '../pages/Registro2';
 import HomePage from '../pages/home/home';
 import pass from '../pages/createPassword/createPassword';
@@ -11,7 +11,7 @@ function App() {
     <BrowserRouter>
       <Route exact path="/registro" component={Registro2}/>
       <Route exact path="/home" component={HomePage} />
-      <Route exact path="/" component={Login2}/>
+      <Route exact path="/" component={Login}/>
       <Route exact path="/pass" component={pass}/>
     </BrowserRouter>
   );

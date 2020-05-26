@@ -217,19 +217,21 @@ class Registro2 extends React.Component {
             id_municipio: id_municipio,
             correo: correo
         };
+        debugger;
         axios.post(`http://localhost:8030/api/register/`, { user })
             .then(res => {
-                if (res.data == "") {
-                    debugger;
-                    console.log("good");
-                } else {
-                    console.log("Ya se encuentra un usuario con ese correo");
+                debugger;
+                if(res.status === 200){
+                    localStorage.setItem('correo', res.data.correo)
+                    window.location.href= '/home';
+                   
                 }
             })
             .catch(error => {
                 console.log(error)
             });
     }
+
     handleApellidoValidation(event) {
         if (event.target.value !== "") {
             this.setState({ apellidoStateError: "form-control" })

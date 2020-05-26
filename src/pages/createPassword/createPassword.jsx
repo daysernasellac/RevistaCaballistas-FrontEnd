@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../styles/Login2.css'
+import '../../styles/Login.css'
 import userIcon from '../../images/avatar2.png'
 import candadoIcon from '../../images/restricted.png'
 import { Link } from 'react-router-dom'
@@ -24,6 +24,7 @@ class createPassword extends React.Component {
         this.handleModal = this.handleModal.bind(this);
         this.handleChangeContrase = this.handleChangeContrase.bind(this);
         this.handleChangeConfContrase = this.handleChangeConfContrase.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
 
     }
     handleChangeContrase(event) {
@@ -40,22 +41,27 @@ class createPassword extends React.Component {
         });
     }
 
+
     handleSubmit(event) {
         event.preventDefault();
-        const inf = {
-            correo: 'alexius900@gmail.com',
-            contrasena: "holi",
-            tipo_estado: 1
-        };
-        axios.post(`http://localhost:8030/api/register/finalizarRegistro`, { inf })
-            .then((res) => {
-                debugger;
-                console.log("holi")
-            })
-            .catch(error => {
-                console.log(error)
-            });
-
+        debugger;
+        if(this.state.confContrasena === this.state.contrasena){
+            const inf = {
+                correo: 'alexius900@gmail.com',
+                contrasena: "holi",
+                tipo_estado: 1
+            };
+            axios.post(`http://localhost:8030/api/register/finalizarRegistro`, { inf })
+                .then((res) => {
+                    debugger;
+                    console.log("holi")
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+        }else{
+            this.setState({ nombreStateError: "form-control is-invalid"});
+        }
     }
 
     render() {
@@ -79,7 +85,7 @@ class createPassword extends React.Component {
                                         <div className="input-group-prepend">
                                             <div className="input-group-text"><img src={candadoIcon} alt="user" width="18px" /></div>
                                         </div>
-                                        <input type="password" className="form-control" id="labelEmail" placeholder="Nueva contraseña" required="true" onChange={this.handleChangeContrase} value={this.state.value}/>
+                                        <input type="password" className={this.state.nombreStateError} id="labelEmail" placeholder="Nueva contraseña" required="true" onChange={this.handleChangeContrase} value={this.state.value}/>
                                     </div>
                                 </div>
                                 <hr className="separador" />
@@ -89,7 +95,10 @@ class createPassword extends React.Component {
                                         <div className="input-group-prepend">
                                             <div className="input-group-text"><img src={candadoIcon} alt="candado" width="18px" /></div>
                                         </div>
-                                        <input type="password" className="form-control" id="inputContrasenaLogin" placeholder="Confirme nueva contraseña" required="true"  onChange={this.handleChangeConfContrase} value={this.state.value}/>
+                                        <input type="password" className={this.state.nombreStateError} id="inputContrasenaLogin" placeholder="Confirme nueva contraseña" required="true"  onChange={this.handleChangeConfContrase} value={this.state.value} onBlur={this.handleContrasenaValidation}/>
+                                        <div className="invalid-feedback">
+                                    Las contraseñas no coinciden
+                                </div>
                                     </div>
                                 </div>
 
