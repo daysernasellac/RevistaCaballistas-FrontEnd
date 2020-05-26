@@ -65,6 +65,10 @@ class Login extends React.Component {
                 console.log(error)
             })
     }
+  
+    componentDidMount(){
+        document.title = "Login"
+    }
 
     buscarUsuario(id_cliente) {
         axios.get(`http://localhost:8030/api/register/informacionClienteById/${id_cliente}`)
