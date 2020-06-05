@@ -17,7 +17,7 @@ class createPassword extends React.Component {
             show: false,
             contrasena: '',
             confContrasena: '',
-            correo: ''
+            id_cliente : ''
 
         }
 
@@ -41,27 +41,57 @@ class createPassword extends React.Component {
         });
     }
 
+    componentDidMount() {
+        const correo = localStorage.getItem('Electronico');
+        axios.get(`http://localhost:8030/api/register/informacionCliente/correo/${correo}`)
+            .then(res => {
+                if (res.data == "") {
+                    console.log("correo no existe")
+                } else {
+                    const id_cliente  = res.data[0].cliente;
+                    this.setState({ id_cliente })
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            });
+    }
 
     handleSubmit(event) {
         event.preventDefault();
-        debugger;
-        if(this.state.confContrasena === this.state.contrasena){
+        if (this.state.confContrasena === this.state.contrasena) {
             const inf = {
-                correo: 'alexius900@gmail.com',
-                contrasena: "holi",
+                correo: localStorage.getItem('Electronico'),
+                contrasena: this.state.contrasena,
                 tipo_estado: 1
             };
             axios.post(`http://localhost:8030/api/register/finalizarRegistro`, { inf })
                 .then((res) => {
-                    debugger;
-                    console.log("holi")
+                    if (res.status === 200) {
+                        this.buscarUsuario();
+                    }
                 })
                 .catch(error => {
                     console.log(error)
                 });
-        }else{
-            this.setState({ nombreStateError: "form-control is-invalid"});
+        } else {
+            this.setState({ nombreStateError: "form-control is-invalid" });
         }
+    }
+
+    buscarUsuario() {
+        axios.get(`http://localhost:8030/api/register/informacionClienteById/${this.state.id_cliente}`)
+            .then(res => {
+                if (res.data == "") {
+                    console.log("usuario")
+                } else {
+                    localStorage.setItem('Nombre', res.data.nombres)
+                    window.location.href = '/home';
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            });
     }
 
     render() {
@@ -77,7 +107,7 @@ class createPassword extends React.Component {
                         <div className="container contenedorForm">
                             <h3 className="tituloForm">Establece tu contraseña</h3>
 
-                            <form className="formularioLogin">
+                            <form className="formularioLogin" onSubmit={this.handleSubmit}>
 
                                 <div className="col-sm-12 my-1 groupInputLogin groupEmail">
                                     <label htmlFor="labelEmail" ><b>Constraseña</b><span className="obligatorio">*</span></label>
@@ -85,7 +115,7 @@ class createPassword extends React.Component {
                                         <div className="input-group-prepend">
                                             <div className="input-group-text"><img src={candadoIcon} alt="user" width="18px" /></div>
                                         </div>
-                                        <input type="password" className={this.state.nombreStateError} id="labelEmail" placeholder="Nueva contraseña" required="true" onChange={this.handleChangeContrase} value={this.state.value}/>
+                                        <input type="password" className={this.state.nombreStateError} id="labelEmail" placeholder="Nueva contraseña" required="true" onChange={this.handleChangeContrase} value={this.state.value} />
                                     </div>
                                 </div>
                                 <hr className="separador" />
@@ -95,15 +125,15 @@ class createPassword extends React.Component {
                                         <div className="input-group-prepend">
                                             <div className="input-group-text"><img src={candadoIcon} alt="candado" width="18px" /></div>
                                         </div>
-                                        <input type="password" className={this.state.nombreStateError} id="inputContrasenaLogin" placeholder="Confirme nueva contraseña" required="true"  onChange={this.handleChangeConfContrase} value={this.state.value} onBlur={this.handleContrasenaValidation}/>
+                                        <input type="password" className={this.state.nombreStateError} id="inputContrasenaLogin" placeholder="Confirme nueva contraseña" required="true" onChange={this.handleChangeConfContrase} value={this.state.value} onBlur={this.handleContrasenaValidation} />
                                         <div className="invalid-feedback">
-                                    Las contraseñas no coinciden
+                                            Las contraseñas no coinciden
                                 </div>
                                     </div>
                                 </div>
 
                                 <div className="col text-center submitContenedorLogin">
-                                    <button type="submit" className="btn btn-primary btn-lg btn-block btn-dark submitLogin" onClick={this.handleSubmit}>Establece contraseña</button>
+                                    <button type="submit" className="btn btn-primary btn-lg btn-block btn-dark submitLogin">Establece contraseña</button>
                                 </div>
                             </form>
                         </div>

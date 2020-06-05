@@ -9,7 +9,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 
 
 class Registro2 extends React.Component {
-
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -28,11 +28,11 @@ class Registro2 extends React.Component {
             departamento: '',
             ciudad: '',
             //Control validacion de errores
-            nombreStateError: 'form-control',
-            apellidoStateError: 'form-control',
+            nombreStateError: 'form-control textCap',
+            apellidoStateError: 'form-control textCap',
             emailStateError: 'form-control',
             numeroStateError: 'form-control',
-            direccionStateError: 'form-control',
+            direccionStateError: 'form-control textCap',
             numeroDocumentoStateError: 'form-control',
             departamentoStateError: 'custom-select',
             ciudadStateError: 'custom-select',
@@ -229,7 +229,8 @@ class Registro2 extends React.Component {
                         this.correo(this.state.nombres, this.state.apellidos, this.state.email, this.state.numeroContacto, this.state.direccion, this.state.tipoDocumento,
                             this.state.numeroDocumento, this.state.departamento, this.state.ciudad)
                     } else {
-                        console.log("Ya se encuentra un usuario con esa identificación")
+                        this.setState({ numeroDocumentoStateError: "form-control is-invalid" })
+                        this.setState({ mensajeErrorNumeroDocumento: "Ya se encuentra un usuario con esa identificación." })
                     }
                 })
                 .catch(error => {
@@ -237,8 +238,6 @@ class Registro2 extends React.Component {
                 });
 
         }
-
-        return <Redirect to="/registro/confirmar_correo" />
     }
 
     correo(nombres, apellidos, correo, telefono, dirrecion, id_tipo_documento, numero_documento, id_departamento, id_municipio) {
@@ -247,7 +246,8 @@ class Registro2 extends React.Component {
                 if (res.data == "") {
                     this.registro(nombres, apellidos, correo, telefono, dirrecion, id_tipo_documento, numero_documento, id_departamento, id_municipio);
                 } else {
-                    console.log("Ya se encuentra un usuario con ese correo");
+                    this.setState({ emailStateError: "form-control is-invalid" })
+                    this.setState({ mensajeErrorEmail: "Ya se encuentra un usuario con ese correo electrónico."})
                 }
             })
             .catch(error => {
@@ -268,20 +268,29 @@ class Registro2 extends React.Component {
             id_municipio: id_municipio,
             correo: correo
         };
-        debugger;
         axios.post(`http://localhost:8030/api/register/`, { user })
             .then(res => {
-                debugger;
-                if(res.status === 200){
-                    localStorage.setItem('correo', res.data.correo)
-                    window.location.href= '/home';
-                   
+                if (res.status === 200) {
+                    localStorage.setItem('Electronico', correo)
+                    window.location.href = `/pass`;
                 }
+            })
+            .catch(error => {
+                console.log(error)
+
+            });
+    }
+
+    enviarCorreo() {
+        axios.post(`http://localhost:8030/api/email/verificar`, this.state.correo)
+            .then(res => {
+                console.log("Mensaje enviado")
             })
             .catch(error => {
                 console.log(error)
             });
     }
+
 
     handleApellidoValidation(event) {
         if (event.target.value !== "") {
@@ -467,7 +476,7 @@ class Registro2 extends React.Component {
                         <h4><b>Regístrese gratis y obtén tu Revista!</b></h4>
                     </div>
 
-                    <form className="formularioContenedor" autoComplete="off" method="POST" onSubmit={this.handleSubmit}>
+                    <form className="formularioContenedor" autoComplete="off" onSubmit={this.handleSubmit}>
 
                         <div className="container inputsContenedor">
                             <div className="form-group">

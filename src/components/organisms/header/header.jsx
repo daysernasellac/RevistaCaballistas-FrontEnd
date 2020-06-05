@@ -22,6 +22,7 @@ export default function Header(){
             <img src={IMG_USER} />
             <span className='name' >{firstName}</span>
             <img src={IMG_TRIANGULO} />
+            <span className='name'  >Cerrar sesion</span>
             { isShow && <div className='options' >
                 <a  onClick={cerrarSesion()} className='option' >Cerrar Sesion</a>
             </div>}

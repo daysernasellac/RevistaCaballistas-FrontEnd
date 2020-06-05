@@ -1,4 +1,3 @@
-import React from 'react'
 import '../styles/Login.css'
 import userIcon from '../images/avatar2.png'
 import candadoIcon from '../images/restricted.png'
@@ -8,6 +7,10 @@ import axios from 'axios';
 import ReactDOM from 'react-dom';
 import {Redirect} from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
+// import { Alert } from 'reactstrap';
+import { MDBContainer, MDBAlert } from 'mdbreact';
+import Alert from 'react-bootstrap/Alert';
+import React, { useState } from 'react';
 
 
 class Login extends React.Component {
@@ -19,6 +22,8 @@ class Login extends React.Component {
             show: false,
             correo: '',
             constrasena: '',
+            loginStateError: 'form-control',
+            mensajeErrorLogin: ''
         }
 
         this.handleModal = this.handleModal.bind(this);
@@ -27,7 +32,6 @@ class Login extends React.Component {
         this.login = this.login.bind(this);
         this.buscarUsuario = this.buscarUsuario.bind(this);
 
-        
     }
 
     handleChangeUser(event) {
@@ -53,12 +57,13 @@ class Login extends React.Component {
         }
         debugger;
         axios.post(`http://localhost:8030/api/login/login`, {datos})
-        .then(res => {
-            debugger;
-            if (res.data === "") {
-                console.log("usuario no registrado en la base de datos");
-            } else {
-                this.buscarUsuario(res.data.cliente);
+            .then(res => {
+                debugger;
+                if (res.data === "") {
+                    this.setState({ loginStateError: "form-control is-invalid" })
+                    this.setState({ mensajeErrorLogin: "No se pudo encontrar usuario."})
+                } else {
+                    this.buscarUsuario(res.data.cliente);
                 }
             })
             .catch(error => {
@@ -77,7 +82,7 @@ class Login extends React.Component {
                    console.log("usuario")
                 } else{
                     debugger;
-                    localStorage.setItem('Nombre', res.data.nombres)
+                    localStorage.setItem('Nombre', res.data.nombres);
                     window.location.href= '/home';
                 }
             })
@@ -85,12 +90,16 @@ class Login extends React.Component {
                 console.log(error)
             });
     }
+    
 
     render() {
         return (
             <div className="container-fluid wrapper2">
                 <div className="container contenedorAll">
-
+                    {/* <Alert color="primary" isOpen={true}>Holiii</Alert>
+                    <MDBAlert color="warning">
+                        A simple primary alert with <a href="#!" className="alert-link">an example link</a>. Give it a click if you like.
+                    </MDBAlert> */}
                     <h1 className="containerLink">
                         <a href="https://www.revistacaballistas.com/" title="Revista Caballistas" className="linkHome"></a>
                     </h1>
@@ -119,6 +128,9 @@ class Login extends React.Component {
                                         </div>
                                         <input type="password" className="form-control" id="inputContrasenaLogin" placeholder="Contraseña" onChange={this.handleChangePass} value={this.state.value} />
                                     </div>
+                                </div>
+                                <div className="invalid-feedback">
+                                    {this.state.mensajeErrorEmail}
                                 </div>
 
                                 <div className="col text-center submitContenedorLogin">

@@ -76,6 +76,10 @@ label{
     font-size: 14px;
 }
 
+.textCap{
+    text-transform: capitalize;
+}
+
 
 .loginContenedor{
     margin-left: 75px;

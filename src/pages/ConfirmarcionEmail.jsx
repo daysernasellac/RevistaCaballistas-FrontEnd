@@ -3,6 +3,20 @@ import logoBlanco from '../images/logo_blanco.png'
 import '../styles/confirmacionEmail.css'
 
 class ConfirmacionEmail extends React.Component {
+
+
+    constructor(props) {
+        super(props);
+        this.state = {
+
+            nombreStateError: "form-control",
+            correo : localStorage.getItem('correo')
+
+        }
+        
+    }
+    
+
     render() {
         return (
             <div className="container-fluid">
@@ -21,7 +35,6 @@ class ConfirmacionEmail extends React.Component {
                     <div className="container textEmail">
                     Por favor revise su correo electrónico para confirmar su cuenta
                     </div>
-
                 </div>
             </div>
         )
