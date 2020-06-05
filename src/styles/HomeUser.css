@@ -1,0 +1,47 @@
+.logoNav{
+    display: inline-block;
+    height: 48px;
+    width: 135px;    
+    overflow: hidden;
+    text-decoration: underline;
+    background-image: url("../images/logo_blanco_nav.png");
+    background-repeat: no-repeat;
+
+}
+
+.userIcon{
+    display: inline-block;
+    height: 38px;
+    width: 38px;
+    border-radius: 100%;    
+    overflow: hidden;
+    text-decoration: underline;
+    background-image: url("../images/user3.png");
+    background-repeat: no-repeat;
+
+}
+
+.mainHome{
+    background-color: #ccc;
+    height: 100%;
+    width: 100%;
+}
+
+h1{
+    color: white;
+}
+
+@media only screen and (max-width: 991px) { 
+    .element{
+        border-bottom: 0.5px solid white;
+    }
+
+    .userIcon{
+        position: relative;
+        top: 10px;
+    }
+
+    .nombreUser{
+        margin: 0px;
+    }
+}
