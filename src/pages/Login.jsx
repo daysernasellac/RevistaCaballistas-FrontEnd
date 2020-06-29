@@ -18,11 +18,11 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            nombreStateError: "form-control",
             show: false,
             correo: '',
             constrasena: '',
             loginStateError: 'form-control',
+            alertState: 'alert alert-danger alert-dismissible fade',
             mensajeErrorLogin: ''
         }
 
@@ -31,7 +31,8 @@ class Login extends React.Component {
         this.handleChangePass = this.handleChangePass.bind(this);
         this.login = this.login.bind(this);
         this.buscarUsuario = this.buscarUsuario.bind(this);
-
+        this.changeStateAlert = this.changeStateAlert.bind(this);
+        this.buscarNombre = this.buscarNombre.bind(this);
     }
 
     handleChangeUser(event) {
@@ -55,15 +56,20 @@ class Login extends React.Component {
             contrasena : this.state.contrasena
 
         }
-        debugger;
+        
         axios.post(`http://localhost:8030/api/login/login`, {datos})
             .then(res => {
-                debugger;
+               
                 if (res.data === "") {
                     this.setState({ loginStateError: "form-control is-invalid" })
-                    this.setState({ mensajeErrorLogin: "No se pudo encontrar usuario."})
+                    this.setState({ alertState: 'alert alert-danger alert-dismissible fade show' })
+                    this.setState({ mensajeErrorLogin: "No se pudo encontrar usuario registrado."})
                 } else {
-                    this.buscarUsuario(res.data.cliente);
+                    this.buscarUsuario();
+                    this.setState({ loginStateError: "form-control" })
+                    this.setState({ alertState: 'alert alert-success alert-dismissible fade show' })
+                    this.setState({ mensajeErrorLogin: "Bienvenido!"})
+                    
                 }
             })
             .catch(error => {
@@ -75,31 +81,62 @@ class Login extends React.Component {
         document.title = "Login"
     }
 
-    buscarUsuario(id_cliente) {
-        axios.get(`http://localhost:8030/api/register/informacionClienteById/${id_cliente}`)
+    buscarUsuario() {
+        axios.get(`http://localhost:8030/api/register/informacionCliente/correo/${this.state.correo}`)
             .then(res => {
                 if (res.data == "") {
                    console.log("usuario")
                 } else{
-                    debugger;
-                    localStorage.setItem('Nombre', res.data.nombres);
-                    window.location.href= '/home';
+                    let obj = res.data;
+                    this.buscarNombre(obj[0]["cliente"]);
+                    localStorage.setItem('UsuarioSession', this.state.correo);
+                    
+                    if(obj[0]["tipo_usuario"] === 1){
+                        window.location.href= '/homeUser';
+                    }else{
+                        alert("este no es el admin")
+                    }
+                    
                 }
             })
             .catch(error => {
                 console.log(error)
             });
     }
+
+    buscarNombre(id_cliente){
+        axios.get(`http://localhost:8030/api/register/informacionClienteById/${id_cliente}`)
+            .then(res => {
+                if (res.data == "") {
+                   console.log("usuario")
+                } else{
+                    localStorage.setItem('Nombre', res.data.nombres);
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            });
+    }
+
+    changeStateAlert(){
+        this.setState({ alertState: 'alert alert-danger alert-dismissible fade' })
+    }
     
 
     render() {
         return (
             <div className="container-fluid wrapper2">
+
+                <div className="container alerts">
+                    <div className={this.state.alertState} role="alert">
+        {this.state.mensajeErrorLogin}
+                        <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={this.changeStateAlert}>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+
                 <div className="container contenedorAll">
-                    {/* <Alert color="primary" isOpen={true}>Holiii</Alert>
-                    <MDBAlert color="warning">
-                        A simple primary alert with <a href="#!" className="alert-link">an example link</a>. Give it a click if you like.
-                    </MDBAlert> */}
                     <h1 className="containerLink">
                         <a href="https://www.revistacaballistas.com/" title="Revista Caballistas" className="linkHome"></a>
                     </h1>
@@ -108,7 +145,7 @@ class Login extends React.Component {
                         <div className="container contenedorForm">
                             <h3 className="tituloForm">Ingrese a su cuenta</h3>
 
-                            <form className="formularioLogin" autocomplete="off" action="/Registro" method="POST">
+                            <form className="formularioLogin" autoComplete="off" action="/Registro" method="POST">
 
                                 <div className="col-sm-12 my-1 groupInputLogin groupEmail">
                                     <label htmlFor="labelEmail" ><b>Email</b></label>
@@ -116,7 +153,7 @@ class Login extends React.Component {
                                         <div className="input-group-prepend">
                                             <div className="input-group-text"><img src={userIcon} alt="user" width="18px" /></div>
                                         </div>
-                                        <input type="text" className="form-control" id="labelEmail" placeholder="Email" onChange={this.handleChangeUser} value={this.state.value} />
+                                        <input type="text" className={this.state.loginStateError} id="labelEmail" placeholder="Email" onChange={this.handleChangeUser} value={this.state.value} />
                                     </div>
                                 </div>
                                 <hr className="separador" />
@@ -126,22 +163,20 @@ class Login extends React.Component {
                                         <div className="input-group-prepend">
                                             <div className="input-group-text"><img src={candadoIcon} alt="candado" width="18px" /></div>
                                         </div>
-                                        <input type="password" className="form-control" id="inputContrasenaLogin" placeholder="Contraseña" onChange={this.handleChangePass} value={this.state.value} />
+                                        <input type="password" aria-describedby="numeroHelp" className={this.state.loginStateError} id="inputContrasenaLogin" placeholder="Contraseña" onChange={this.handleChangePass} value={this.state.value} />
+             
                                     </div>
-                                </div>
-                                <div className="invalid-feedback">
-                                    {this.state.mensajeErrorEmail}
                                 </div>
 
                                 <div className="col text-center submitContenedorLogin">
-                                    <button type="submit" to="/Registro" className="btn btn-primary btn-lg btn-block btn-dark submitLogin" onClick={this.login} onSu>Ingresar</button>
+                                    <button type="submit" to="/Registro" className="btn btn-primary btn-lg btn-block btn-dark submitLogin" onClick={this.login}>Ingresar</button>
                                 </div>
                             </form>
 
                             <hr className="separadorInferior" />
 
                             <div className="container-fluid footerLogin">
-                                <p>Aun no tienes una cuenta? <Link to="/Registro"><b className="linkRegistroLogin">Regístrate</b></Link></p>
+                                <p>Aún no tienes una cuenta? <Link to="/Registro"><b className="linkRegistroLogin">Regístrate</b></Link></p>
                             </div>
 
                         </div>

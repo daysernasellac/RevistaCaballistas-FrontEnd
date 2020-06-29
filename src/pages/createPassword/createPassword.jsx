@@ -85,8 +85,9 @@ class createPassword extends React.Component {
                 if (res.data == "") {
                     console.log("usuario")
                 } else {
-                    localStorage.setItem('Nombre', res.data.nombres)
-                    window.location.href = '/home';
+                    localStorage.setItem('Nombre', res.data.nombres);
+                    localStorage.setItem('UsuarioSession', this.state.correo);
+                    window.location.href= '/homeUser';
                 }
             })
             .catch(error => {

@@ -1,6 +1,23 @@
 import React from 'react';
 
 class NavBar extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            
+        }
+
+        this.cerrarSesion = this.cerrarSesion.bind(this);
+    }
+
+    cerrarSesion(){
+        localStorage.removeItem('UsuarioSession');
+        localStorage.removeItem('Nombre');
+        localStorage.removeItem('Electronico');
+        window.location.href= '/';
+    }
+
     render() {
         return (
             <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
@@ -11,22 +28,31 @@ class NavBar extends React.Component {
                 <div className="collapse navbar-collapse" id="navbarText">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item element active">
-                            <a className="nav-link" href="#">Inicio <span className="sr-only">(current)</span></a>
+                            <a className="nav-link" href="#">Clientes registrados<span className="sr-only">(current)</span></a>
                         </li>
                         <li className="nav-item element">
-                            <a className="nav-link" href="#">Planes de suscripcion</a>
+                            <a className="nav-link" href="#">Pagos realizados</a>
                         </li>
                         <li className="nav-item element">
                             <a className="nav-link" href="#">Ediciones</a>
                         </li>
                         <li className="nav-item element">
+                            <a className="nav-link" href="#">Planes de suscrpcion</a>
+                        </li>
+                        <li className="nav-item element">
                             <a className="nav-link" href="#">PQR</a>
                         </li>
                     </ul>
-                    
-                    <span className="navbar-text mr-3 nombreUser">{this.props.usuario}</span>
+                    <li className="nav-item dropdown">
+                        <span className="dropdown-toggle navbar-text mr-3 nombreUser" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{this.props.usuario}</span>
+                        <div className="dropdown-menu opcionesUser" aria-labelledby="navbarDropdownMenuLink">
+                            <a className="dropdown-item listCerrarSesion" onClick={this.cerrarSesion} href="#">Cerrar Sesion</a>
+                        </div>
+
+                    </li>
                     <span className="navbar-text userIcon mr-2"></span>
-                    
+                
+
                 </div>
             </nav>
         )

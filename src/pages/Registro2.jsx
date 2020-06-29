@@ -4,12 +4,11 @@ import logoBlanco from '../images/logo_blanco.png'
 import { Link, Redirect } from 'react-router-dom'
 import InputMask from 'react-input-mask';
 import axios from 'axios';
-import { registrar } from '../components/registro/registro.service';
 import { Modal, Button, Form } from 'react-bootstrap';
 
 
 class Registro2 extends React.Component {
-    
+
     constructor(props) {
         super(props);
         this.state = {
@@ -172,6 +171,7 @@ class Registro2 extends React.Component {
     handleSubmit(event) {
 
         //Validacion campos
+
         if (this.state.nombres === '' || this.state.nombreStateError === "form-control is-invalid") {
             this.setState({ nombreStateError: "form-control is-invalid" })
             event.preventDefault()
@@ -223,8 +223,9 @@ class Registro2 extends React.Component {
             this.state.departamento !== '' &&
             this.state.ciudad !== ''
         ) {
-            registrar(this.state)
-                .then((res) => {
+            event.preventDefault()
+            axios.get(`http://localhost:8030/api/register/informacionCliente/${this.state.tipoDocumento}&${this.state.numeroDocumento}`)
+                .then(res => {
                     if (res.data == "") {
                         this.correo(this.state.nombres, this.state.apellidos, this.state.email, this.state.numeroContacto, this.state.direccion, this.state.tipoDocumento,
                             this.state.numeroDocumento, this.state.departamento, this.state.ciudad)
@@ -236,7 +237,6 @@ class Registro2 extends React.Component {
                 .catch(error => {
                     console.log(error)
                 });
-
         }
     }
 
@@ -247,7 +247,7 @@ class Registro2 extends React.Component {
                     this.registro(nombres, apellidos, correo, telefono, dirrecion, id_tipo_documento, numero_documento, id_departamento, id_municipio);
                 } else {
                     this.setState({ emailStateError: "form-control is-invalid" })
-                    this.setState({ mensajeErrorEmail: "Ya se encuentra un usuario con ese correo electrónico."})
+                    this.setState({ mensajeErrorEmail: "Ya se encuentra un usuario con ese correo electrónico." })
                 }
             })
             .catch(error => {
@@ -268,11 +268,12 @@ class Registro2 extends React.Component {
             id_municipio: id_municipio,
             correo: correo
         };
+
         axios.post(`http://localhost:8030/api/register/`, { user })
             .then(res => {
                 if (res.status === 200) {
                     localStorage.setItem('Electronico', correo)
-                    window.location.href = `/pass`;
+                    window.location.href = '/pass';
                 }
             })
             .catch(error => {
@@ -290,7 +291,6 @@ class Registro2 extends React.Component {
                 console.log(error)
             });
     }
-
 
     handleApellidoValidation(event) {
         if (event.target.value !== "") {
@@ -571,7 +571,8 @@ class Registro2 extends React.Component {
                             </div>
                         </div>
                     </form>
-                    <br />
+                    <br/>
+                    <br/>
                     <Modal show={this.state.show} onHide={this.handleModal} centered>
                         <Modal.Header centered><b>Ya casi!</b></Modal.Header>
                         <Modal.Body>
