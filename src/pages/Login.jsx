@@ -23,7 +23,8 @@ class Login extends React.Component {
             constrasena: '',
             loginStateError: 'form-control',
             alertState: 'alert alert-danger alert-dismissible fade',
-            mensajeErrorLogin: ''
+            mensajeErrorLogin: '',
+            correoOlvidar: ''
         }
 
         this.handleModal = this.handleModal.bind(this);
@@ -33,6 +34,8 @@ class Login extends React.Component {
         this.buscarUsuario = this.buscarUsuario.bind(this);
         this.changeStateAlert = this.changeStateAlert.bind(this);
         this.buscarNombre = this.buscarNombre.bind(this);
+        this.handleChangePassForg = this.handleChangePassForg.bind(this);
+        this.olvidasteContrasena = this.olvidasteContrasena.bind(this);
     }
 
     handleChangeUser(event) {
@@ -47,6 +50,29 @@ class Login extends React.Component {
         this.setState({
             show: !this.state.show
         });
+    }
+
+    handleChangePassForg(event) {
+        this.setState({ correoOlvidar: event.target.value });
+    }
+
+    olvidasteContrasena() {
+        const body = {
+            correo : this.state.correoOlvidar
+        };
+        axios.post(`http://localhost:8030/api/email/olvidastePassword`, body)
+            .then(res => {
+                this.setState({ alertState: 'alert alert-success alert-dismissible fade show' })
+                this.setState({ mensajeErrorLogin: "Correo enviado!"})
+                this.setState({
+                    show: !this.state.show
+                });
+                localStorage.setItem('Electronico', this.state.correoOlvidar);
+
+            })
+            .catch(error => {
+                console.log(error)
+            });
     }
 
     login(event) {
@@ -92,7 +118,7 @@ class Login extends React.Component {
                     localStorage.setItem('UsuarioSession', this.state.correo);
                     
                     if(obj[0]["tipo_usuario"] === 1){
-                        window.location.href= '/homeUser';
+                        window.location.href= '/Clientes_Registrados';
                     }else{
                         alert("este no es el admin")
                     }
@@ -191,15 +217,13 @@ class Login extends React.Component {
                                 <Form className="formModal">
                                     <Form.Group controlId="formBasicEmail">
                                         <Form.Label>Email address</Form.Label>
-                                        <Form.Control type="email" placeholder="Enter email" />
+                                        <Form.Control type="email" className={this.state.loginStateError} placeholder="Ingresa email" onChange={this.handleChangePassForg} value={this.state.value} />
                                     </Form.Group>
-                                    <Button className="btn-dark submitModal" onClick={this.handleModal}>
+                                    <Button className="btn-dark submitModal" onClick={this.olvidasteContrasena}>
                                         Enviar
                                     </Button>
                                 </Form>
                             </Modal.Body>
-
-
                         </Modal>
                     </div>
                 </div>

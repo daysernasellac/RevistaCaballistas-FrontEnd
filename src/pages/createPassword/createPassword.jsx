@@ -17,7 +17,7 @@ class createPassword extends React.Component {
             show: false,
             contrasena: '',
             confContrasena: '',
-            id_cliente : ''
+            id_cliente: ''
 
         }
 
@@ -43,12 +43,13 @@ class createPassword extends React.Component {
 
     componentDidMount() {
         const correo = localStorage.getItem('Electronico');
+        this.setState({ correo });
         axios.get(`http://localhost:8030/api/register/informacionCliente/correo/${correo}`)
             .then(res => {
                 if (res.data == "") {
                     console.log("correo no existe")
                 } else {
-                    const id_cliente  = res.data[0].cliente;
+                    const id_cliente = res.data[0].cliente;
                     this.setState({ id_cliente })
                 }
             })
@@ -87,7 +88,11 @@ class createPassword extends React.Component {
                 } else {
                     localStorage.setItem('Nombre', res.data.nombres);
                     localStorage.setItem('UsuarioSession', this.state.correo);
-                    window.location.href= '/homeUser';
+                    alert("Contraseña establecida...")
+                    localStorage.removeItem('UsuarioSession');
+                    localStorage.removeItem('Nombre');
+                    localStorage.removeItem('Electronico');
+                    window.location.href = '/';
                 }
             })
             .catch(error => {

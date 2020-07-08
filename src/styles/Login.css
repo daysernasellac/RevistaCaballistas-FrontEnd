@@ -20,6 +20,18 @@
     padding-top: 60px;
 }
 
+.textEmail{
+    color: white;
+    text-align: center;
+    font-size: 15px;
+}
+
+.textEmail2{
+    color: white;
+    text-align: center;
+    font-size: 30px;
+}
+
 
 .alerts{
     position: absolute;

@@ -1,6 +1,6 @@
 import React from 'react'
-import logoBlanco from '../images/logo_blanco.png'
-import '../styles/confirmacionEmail.css'
+import logoBlanco from '../images/logo_blanco.png';
+import '../styles/Login.css';
 
 class ConfirmacionEmail extends React.Component {
 
@@ -10,30 +10,30 @@ class ConfirmacionEmail extends React.Component {
         this.state = {
 
             nombreStateError: "form-control",
-            correo : localStorage.getItem('correo')
+            correo: localStorage.getItem('correo')
 
         }
-        
+
     }
-    
+
 
     render() {
         return (
-            <div className="container-fluid">
+            <div className="container-fluid wrapper2">
                 <div className="container">
-                    <br/>
+                    <br />
                     <div className="row">
                         <div className="col-sm columnaImg">
                             <img src={logoBlanco} alt="img" className="img-fluid logo" />
                         </div>
                     </div>
-                    <br/>
+                    <br />
                     <div className="container textEmail2">
-                    <b>Ya casi!</b>
+                        <b>Ya casi!</b>
                     </div>
-                    <br/>
+                    <br />
                     <div className="container textEmail">
-                    Por favor revise su correo electrónico para confirmar su cuenta
+                        Por favor revise su correo electrónico para confirmar su cuenta
                     </div>
                 </div>
             </div>

@@ -273,7 +273,8 @@ class Registro2 extends React.Component {
             .then(res => {
                 if (res.status === 200) {
                     localStorage.setItem('Electronico', correo)
-                    window.location.href = '/pass';
+                    this.enviarCorreo(correo);
+                    window.location.href= '/registro/confirmarCorreo';
                 }
             })
             .catch(error => {
@@ -282,8 +283,11 @@ class Registro2 extends React.Component {
             });
     }
 
-    enviarCorreo() {
-        axios.post(`http://localhost:8030/api/email/verificar`, this.state.correo)
+    enviarCorreo(correo) {
+        const body = {
+            correo
+        };
+        axios.post(`http://localhost:8030/api/email/verificar`, body)
             .then(res => {
                 console.log("Mensaje enviado")
             })

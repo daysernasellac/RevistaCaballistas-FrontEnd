@@ -35,6 +35,7 @@
 
     min-width: 100px;
     top: 50px;
+    margin-right: 10px;
 }
 
 .nav-item{
@@ -45,7 +46,7 @@
 }
 
 .mainHome{
-    background-color: #ccc;
+    background-color:#fff;
     height: 100%;
     width: 100%;
 }
@@ -91,7 +92,10 @@ h1{
     transition: width 0.4s linear;
     }
 
-    
+    thead{
+        background-color:#343a40;
+        color: #fff;
+    } 
 
     .search_icon{
     height: 40px;
