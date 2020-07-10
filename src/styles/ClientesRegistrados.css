@@ -1,0 +1,115 @@
+
+
+.logoNav{
+    display: inline-block;
+    height: 48px;
+    width: 135px;    
+    overflow: hidden;
+    text-decoration: underline;
+    background-image: url("../images/logo_blanco_nav.png");
+    background-repeat: no-repeat;
+
+}
+
+.active{
+    text-decoration: underline white;
+}
+
+.userIcon{
+    display: inline-block;
+    height: 38px;
+    width: 38px;
+    border-radius: 100%;    
+    overflow: hidden;
+    text-decoration: underline;
+    background-image: url("../images/user3.png");
+    background-repeat: no-repeat;
+
+}
+
+.listCerrarSesion{
+    font-size: 13px;
+}
+
+.dropdown-menu{
+
+    min-width: 100px;
+    top: 50px;
+    margin-right: 10px;
+}
+
+.nav-item{
+    list-style: none;
+}
+.nav-item:hover{
+    cursor: pointer;
+}
+
+.mainHome{
+    background-color:#fff;
+    height: 100%;
+    width: 100%;
+}
+
+h1{
+    color: white;
+}
+
+@media only screen and (max-width: 991px) { 
+    .element{
+        border-bottom: 0.5px solid white;
+    }
+
+    .userIcon{
+        position: relative;
+        top: 10px;
+    }
+
+    .nombreUser{
+        margin: 0px;
+    }
+}
+
+.searchbar{
+    margin-bottom: auto;
+    margin-top: auto;
+    height: 60px;
+    background-color: #353b48;
+    border-radius: 30px;
+    padding: 10px;
+    }
+
+    .search_input{
+        color: white;
+    border: 0;
+    outline: 0;
+    background: none;
+    caret-color:transparent;
+    line-height: 40px;
+    padding: 0 10px;
+    width: 200px;
+    caret-color:red;
+    transition: width 0.4s linear;
+    }
+
+    thead{
+        background-color:#343a40;
+        color: #fff;
+    } 
+
+    .search_icon{
+    height: 40px;
+    width: 40px;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: #e74c3c;
+    text-decoration:none;
+    background: white;
+    }
+
+    .search{
+        width: 50%;
+    }

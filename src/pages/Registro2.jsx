@@ -1,10 +1,9 @@
 import React from 'react'
 import '../styles/Registro2.css'
 import logoBlanco from '../images/logo_blanco.png'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import InputMask from 'react-input-mask';
 import axios from 'axios';
-import { registrar, validarCampos } from '../components/registro/registro.service';
 import { Modal, Button, Form } from 'react-bootstrap';
 
 
@@ -13,6 +12,7 @@ class Registro2 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            //Estilos
             backgroundColorHeader: 'none',
             //Formatos
             formatoNumero: '',
@@ -27,15 +27,15 @@ class Registro2 extends React.Component {
             departamento: '',
             ciudad: '',
             //Control validacion de errores
-            nombreStateError: 'form-control',
-            apellidoStateError: 'form-control',
+            nombreStateError: 'form-control textCap',
+            apellidoStateError: 'form-control textCap',
             emailStateError: 'form-control',
             numeroStateError: 'form-control',
-            direccionStateError: 'form-control',
-            tipoDocumetoStateError: 'custom-select',
+            direccionStateError: 'form-control textCap',
             numeroDocumentoStateError: 'form-control',
             departamentoStateError: 'custom-select',
             ciudadStateError: 'custom-select',
+            tipoDocumetoStateError: 'custom-select',
             //Mensajes error
             mensajeErrorEmail: '',
             mensajeErrorCelular: '',
@@ -47,8 +47,7 @@ class Registro2 extends React.Component {
             listaMunicipios: {},
             departamentoId: "null",
             informacionCliente: {},
-            id_tipoDocumento: '',
-
+            id_tipoDocumento: ''
         }
 
         //is-invalid
@@ -82,6 +81,8 @@ class Registro2 extends React.Component {
 
     componentDidMount() {
         window.addEventListener('scroll', this.handleScroll);
+
+        document.title = "Registro"
 
         axios.get('http://localhost:8030/api/core/tipoDocumentos')
             .then(res => {
@@ -168,26 +169,75 @@ class Registro2 extends React.Component {
     }
 
     handleSubmit(event) {
-        event.preventDefault();
 
         //Validacion campos
-        let formErrors = validarCampos(this.state);
-        if(formErrors.length <= 0) {
-            this.setState(formErrors);
+
+        if (this.state.nombres === '' || this.state.nombreStateError === "form-control is-invalid") {
+            this.setState({ nombreStateError: "form-control is-invalid" })
+            event.preventDefault()
         }
-        
-        registrar(this.state)
-            .then((res) => {
-                if (res.data == "") {
-                    this.correo(this.state.nombres, this.state.apellidos, this.state.email, this.state.numeroContacto, this.state.direccion, this.state.tipoDocumento,
-                        this.state.numeroDocumento, this.state.departamento, this.state.ciudad)
-                } else {
-                    console.log("Ya se encuentra un usuario con esa identificación")
-                }
-            })
-            .catch(error => {
-                console.log(error)
-            });
+        if (this.state.apellidos === '' || this.state.apellidoStateError === "form-control is-invalid") {
+            this.setState({ apellidoStateError: "form-control is-invalid" })
+            event.preventDefault()
+        }
+        if (this.state.email === '' || this.state.emailStateError === "form-control is-invalid") {
+            this.setState({ emailStateError: "form-control is-invalid" })
+            this.setState({ mensajeErrorEmail: "Por favor digita tu email." })
+            event.preventDefault()
+        }
+        if (this.state.numeroContacto === '' || this.state.numeroStateError === "form-control is-invalid") {
+            this.setState({ numeroStateError: "form-control is-invalid" })
+            this.setState({ mensajeErrorCelular: "Por favor digita tu numero." })
+            event.preventDefault()
+        }
+        if (this.state.direccion === '' || this.state.direccionStateError === "form-control is-invalid") {
+            this.setState({ direccionStateError: "form-control is-invalid" })
+            this.setState({ mensajeErrorDireccion: "Por favor digita tu direccion." })
+            event.preventDefault()
+        }
+        if (this.state.tipoDocumento === '') {
+            this.setState({ tipoDocumetoStateError: "custom-select is-invalid" })
+            event.preventDefault()
+        }
+        if (this.state.numeroDocumento === '' || this.state.numeroDocumentoStateError === "form-control is-invalid") {
+            this.setState({ numeroDocumentoStateError: "form-control is-invalid" })
+            this.setState({ mensajeErrorNumeroDocumento: "Por favor digita tu numero de documento." })
+            event.preventDefault()
+        }
+        if (this.state.departamento === '') {
+            this.setState({ departamentoStateError: "custom-select is-invalid" })
+            event.preventDefault()
+        }
+        if (this.state.ciudad === '') {
+            this.setState({ ciudadStateError: "custom-select is-invalid" })
+            event.preventDefault()
+        }
+
+        if (this.state.nombres !== '' &&
+            this.state.apellidos !== '' &&
+            this.state.email !== '' &&
+            this.state.numeroContacto !== '' &&
+            this.state.direccion !== '' &&
+            this.state.numeroDocumento !== '' &&
+            this.state.tipoDocumento !== '' &&
+            this.state.departamento !== '' &&
+            this.state.ciudad !== ''
+        ) {
+            event.preventDefault()
+            axios.get(`http://localhost:8030/api/register/informacionCliente/${this.state.tipoDocumento}&${this.state.numeroDocumento}`)
+                .then(res => {
+                    if (res.data == "") {
+                        this.correo(this.state.nombres, this.state.apellidos, this.state.email, this.state.numeroContacto, this.state.direccion, this.state.tipoDocumento,
+                            this.state.numeroDocumento, this.state.departamento, this.state.ciudad)
+                    } else {
+                        this.setState({ numeroDocumentoStateError: "form-control is-invalid" })
+                        this.setState({ mensajeErrorNumeroDocumento: "Ya se encuentra un usuario con esa identificación." })
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+        }
     }
 
     correo(nombres, apellidos, correo, telefono, dirrecion, id_tipo_documento, numero_documento, id_departamento, id_municipio) {
@@ -196,7 +246,8 @@ class Registro2 extends React.Component {
                 if (res.data == "") {
                     this.registro(nombres, apellidos, correo, telefono, dirrecion, id_tipo_documento, numero_documento, id_departamento, id_municipio);
                 } else {
-                    console.log("Ya se encuentra un usuario con ese correo");
+                    this.setState({ emailStateError: "form-control is-invalid" })
+                    this.setState({ mensajeErrorEmail: "Ya se encuentra un usuario con ese correo electrónico." })
                 }
             })
             .catch(error => {
@@ -210,26 +261,41 @@ class Registro2 extends React.Component {
             tipo_documento: id_tipo_documento,
             numero_documento: numero_documento,
             nombres: nombres,
-            apellidos: apellidos,
             telefono: telefono,
             direccion: dirrecion,
             id_departamento: id_departamento,
+            apellidos: apellidos,
             id_municipio: id_municipio,
             correo: correo
         };
+
         axios.post(`http://localhost:8030/api/register/`, { user })
             .then(res => {
-                if (res.data == "") {
-                    debugger;
-                    console.log("good");
-                } else {
-                    console.log("Ya se encuentra un usuario con ese correo");
+                if (res.status === 200) {
+                    localStorage.setItem('Electronico', correo)
+                    this.enviarCorreo(correo);
+                    window.location.href= '/registro/confirmarCorreo';
                 }
+            })
+            .catch(error => {
+                console.log(error)
+
+            });
+    }
+
+    enviarCorreo(correo) {
+        const body = {
+            correo
+        };
+        axios.post(`http://localhost:8030/api/email/verificar`, body)
+            .then(res => {
+                console.log("Mensaje enviado")
             })
             .catch(error => {
                 console.log(error)
             });
     }
+
     handleApellidoValidation(event) {
         if (event.target.value !== "") {
             this.setState({ apellidoStateError: "form-control" })
@@ -413,7 +479,9 @@ class Registro2 extends React.Component {
                     <div className="container textHeader">
                         <h4><b>Regístrese gratis y obtén tu Revista!</b></h4>
                     </div>
-                    <form className="formularioContenedor">
+
+                    <form className="formularioContenedor" autoComplete="off" onSubmit={this.handleSubmit}>
+
                         <div className="container inputsContenedor">
                             <div className="form-group">
                                 <label htmlFor="inputNombres">Nombres <span className="obligatorio">*</span></label>
@@ -502,11 +570,13 @@ class Registro2 extends React.Component {
                                 </div>
                             </div>
                             <div className="col text-center submitContenedor">
-                                <button type="button" className="btn btn-primary submit" onClick={this.handleSubmit}>Guardar</button>
+                                <button type="submit" className="btn btn-primary submit">Guardar</button>
+
                             </div>
                         </div>
                     </form>
-                    <br />
+                    <br/>
+                    <br/>
                     <Modal show={this.state.show} onHide={this.handleModal} centered>
                         <Modal.Header centered><b>Ya casi!</b></Modal.Header>
                         <Modal.Body>

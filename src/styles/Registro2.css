@@ -3,21 +3,18 @@ html, body, #root{
     margin: 0;
     height: 100%;
   }
-
-
 .main{
     width: 750px;
     position: relative;
-    top: 30px;
+    top: 0px;
     
 }
-
 label{
     font-size: 15px;
 }
-
 .wrapper{
     padding: 0px;
+    padding-top: 20px;
     background-image: url(../images/caballo6.png);
     background-repeat: no-repeat;
     background-position: 50% 0%;
@@ -27,23 +24,18 @@ label{
 .submitContenedor{
     margin-top: 10px;
 }
-
 .submit{
     width: 300px;
     background-color: black;
     border: 1px black solid;
 }
-
-
 .headerContenedor{
     margin-bottom: 30px;
 }
-
 .inputsContenedor{
     width: 80%;
     padding-top: 20px;
 }
-
 .formularioContenedor{
     background-color: white;
     padding: 10px;
@@ -52,14 +44,12 @@ label{
     margin: auto;
     padding-bottom: 30px;
 }
-
 .logo{
     width: 200px;
 }
 .obligatorio{
     color: red;
 }
-
 .botonInicioSesion{
     background-color: rgb(61, 61, 61) ;
     color: #fff;
@@ -67,7 +57,6 @@ label{
     border-radius: 5px;
     font-size: 14px;
 }
-
 .textCuenta{
     padding: 5px;
     margin-right: 5px;
@@ -75,13 +64,13 @@ label{
     color: white;
     font-size: 14px;
 }
-
-
+.textCap{
+    text-transform: capitalize;
+}
 .loginContenedor{
     margin-left: 75px;
     margin-top: 10px;
 }
-
 .textHeader{
     width: 60%;
     text-align: center;
@@ -90,11 +79,9 @@ label{
     padding-bottom: 30px;
     font-family: Arial, Helvetica, sans-serif;
 }
-
 .textHeader h4{
     line-height: 1.5;
 }
-
 /*Small devices (landscape phones, 576px and up)*/
 @media only screen and (max-width: 585px) { 
     
@@ -107,7 +94,6 @@ label{
     .loginContenedor{
         margin-left: 40%;
     }
-
     .submit{
         width: 200px;
         background-color: black;
@@ -154,11 +140,9 @@ label{
         margin-left: 35%;
         margin-top: 10px;
     }
-
     .logo{
         margin-top: 7px;
     }
-
     .submit{
         width: 100%;
         background-color: black;
