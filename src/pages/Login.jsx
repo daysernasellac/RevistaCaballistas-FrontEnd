@@ -21,6 +21,7 @@ class Login extends React.Component {
             show: false,
             correo: '',
             constrasena: '',
+            nombre: '',
             loginStateError: 'form-control',
             alertState: 'alert alert-danger alert-dismissible fade',
             mensajeErrorLogin: '',
@@ -114,14 +115,28 @@ class Login extends React.Component {
                    console.log("usuario")
                 } else{
                     let obj = res.data;
-                    this.buscarNombre(obj[0]["cliente"]);
-                    localStorage.setItem('UsuarioSession', this.state.correo);
                     
-                    if(obj[0]["tipo_usuario"] === 1){
-                        window.location.href= '/Clientes_Registrados';
-                    }else{
-                        alert("este no es el admin")
-                    }
+                    //this.buscarNombre(obj[0]["cliente"]);
+
+                    axios.get(`http://localhost:8030/api/register/informacionClienteById/${obj[0]["cliente"]}`)
+                        .then(res => {        
+                            this.setState({ nombre: res.data.nombres})
+                            localStorage.setItem('Nombre', this.state.nombre);
+                        })
+                    .catch(error => {
+                        console.log(error)
+                    });
+                    
+                    localStorage.setItem('UsuarioSession', this.state.correo);
+
+                    setTimeout(() => {
+                        if(obj[0]["tipo_usuario"] === 1){
+                            window.location.href= '/Clientes_Registrados';
+                        }else{
+                            alert("No puedes acceder, temporalmente se logean los admin...")
+                        }
+                      }, 2000);
+                    
                     
                 }
             })
@@ -133,11 +148,11 @@ class Login extends React.Component {
     buscarNombre(id_cliente){
         axios.get(`http://localhost:8030/api/register/informacionClienteById/${id_cliente}`)
             .then(res => {
-                if (res.data == "") {
-                   console.log("usuario")
-                } else{
-                    localStorage.setItem('Nombre', res.data.nombres);
-                }
+                
+                debugger;
+                    this.setState({ nombre: res.data.nombres})
+                    
+                
             })
             .catch(error => {
                 console.log(error)

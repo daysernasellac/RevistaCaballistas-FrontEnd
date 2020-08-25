@@ -15,6 +15,7 @@ class ClientesRegistrados extends React.Component {
         this.state = {
             listaClientes: {},
             search: '',
+            typeSearh: 'numero_documento',
             styleButtoms: 'none',
             id_cliente: '',
             show: false,
@@ -28,11 +29,18 @@ class ClientesRegistrados extends React.Component {
         }
 
         this.select = this.select.bind(this);
+        this.select2 = this.select2.bind(this);
         this.handelData = this.handelData.bind(this);
         this.operatorAction = this.operatorAction.bind(this);
         this.buscarUsuarios = this.buscarUsuarios.bind(this);
         this.handleModal = this.handleModal.bind(this);
         this.handleModal2 = this.handleModal2.bind(this);
+        this.handleChangeCorreo = this.handleChangeCorreo.bind(this);
+        this.handleChangeCedula = this.handleChangeCedula.bind(this);
+        this.handleChangeNombres = this.handleChangeNombres.bind(this);
+        this.handleChangeApellido = this.handleChangeApellido.bind(this);
+        this.handleChangeTypeSearch = this.handleChangeTypeSearch.bind(this);
+        
     }
 
     componentDidMount() {
@@ -68,6 +76,28 @@ class ClientesRegistrados extends React.Component {
                 this.buscarUsuarios()
                 this.setState({
                     show: !this.state.show
+                })
+            })
+            .catch(error => {
+                console.log(error)
+            });
+    }
+
+    select2() {
+        let datos = {
+            id_cliente: this.state.editId,
+            numero_documento: this.state.editNumeroDocumento,
+            nombres: this.state.editNombres,
+            apellidos: this.state.editApellidos,
+            correo: this.state.editCorreo
+        }
+
+
+        axios.post(`http://localhost:8030/api/register/updateUser`, datos)
+            .then(res => {
+                this.buscarUsuarios()
+                this.setState({
+                    show2: !this.state.show2
                 })
             })
             .catch(error => {
@@ -113,15 +143,59 @@ class ClientesRegistrados extends React.Component {
         this.setState({
             show2: !this.state.show2
         });
+        let userEdit = this.state.listaClientes;
+        var number = parseInt(this.state.id_cliente);
+
+        const result = userEdit.find(x => x.id_cliente === number);
+
+        this.setState({
+            editId: result.id_cliente,
+            editCorreo: result.correo,
+            editNumeroDocumento: result.numero_documento,
+            editNombres: result.nombres,
+            editApellidos: result.apellidos
+        })
+
+
+    }
+
+    handleChangeCorreo(event) {
+        this.setState({ editCorreo: event.target.value });
+    }
+
+    handleChangeCedula(event) {
+        this.setState({ editNumeroDocumento: event.target.value });
+    }
+
+    handleChangeNombres(event) {
+        this.setState({ editNombres: event.target.value });
+    }
+
+    handleChangeApellido(event) {
+        this.setState({ editApellidos: event.target.value });
+    }
+
+    handleChangeTypeSearch(event) {
+        this.setState({ typeSearh: event.target.value });
     }
 
 
     render() {
 
         let obj = Array.from(this.state.listaClientes);
+        let typeS = this.state.typeSearh;
         let filterData = obj.filter(
             (cliente) => {
-                return cliente.numero_documento.indexOf(this.state.search) !== -1;
+                if(typeS === 'numero_documento'){
+                    return cliente.numero_documento.indexOf(this.state.search) !== -1;
+                }else if(typeS === 'correo'){
+                    return cliente.correo.indexOf(this.state.search) !== -1;
+                }else if(typeS === 'nombres'){
+                    return cliente.nombres.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+                }else if(typeS === 'apellidos'){
+                    return cliente.apellidos.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+                }
+                
             })
 
         return (
@@ -141,13 +215,24 @@ class ClientesRegistrados extends React.Component {
                                 className="search_input"
                                 type="text"
                                 value={this.state.value}
-                                placeholder="Buscar por cedula..." onChange={this.handelData}
+                                placeholder="Buscar..." onChange={this.handelData}
                             />
                             <span className="search_icon">
                                 <i className="fas fa-search" />
                             </span>
                         </div>
                     </div>
+
+                    <center>
+                        <select className="custom-select" id="inlineFormCustomSelect" style={{ width: '150px', marginTop: '10px' }} onChange={this.handleChangeTypeSearch} value={this.state.value}>
+                            <option selected>Buscar por...</option>
+                            <option value="numero_documento">Cedula</option>
+                            <option value="nombres">Nombre</option>
+                            <option value="apellidos">Apellido</option>
+                            <option value="correo">Correo</option>
+                        </select>
+
+                    </center>
 
 
                 </div>
@@ -157,8 +242,8 @@ class ClientesRegistrados extends React.Component {
                 <br />
 
                 <div className="container">
-                    <button type="button" class="btn btn-danger" style={{ marginRight: "5px", display: this.state.styleButtoms }} onClick={this.handleModal}>Eliminar</button>
-                    <button type="button" class="btn btn-primary" style={{ display: this.state.styleButtoms }} onClick={this.handleModal2}>Agregar</button>
+                    <button type="button" className="btn btn-danger" style={{ marginRight: "5px", display: this.state.styleButtoms }} onClick={this.handleModal}>Eliminar</button>
+                    <button type="button" className="btn btn-primary" style={{ display: this.state.styleButtoms }} onClick={this.handleModal2}>Editar</button>
                     <br />
                     <br />
                     <table className="table table-striped table-light table-bordered">
@@ -180,7 +265,7 @@ class ClientesRegistrados extends React.Component {
                                             <td>{listaCliente.correo}</td>
                                             <td>
 
-                                                <input style={{ marginLeft: '40px' }} class="form-check-input" type="radio" value={listaCliente.id_cliente} name="checkOperator" onClick={this.operatorAction} />
+                                                <input style={{ marginLeft: '40px' }} className="form-check-input" type="radio" value={listaCliente.id_cliente} name="checkOperator" onClick={this.operatorAction} />
 
                                             </td>
                                         </tr >
@@ -213,29 +298,29 @@ class ClientesRegistrados extends React.Component {
                         <form>
                             <div className="form-group">
                                 <label htmlFor="id_cliente" className="col-form-label">ID:</label>
-                                <input type="text" className="form-control" id="id_cliente" value="" />
+                                <input type="text" className="form-control" id="id_cliente" defaultValue={this.state.editId} disabled />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="correo" className="col-form-label">Correo:</label>
-                                <input type="text" className="form-control" id="correo" />
+                                <input type="text" className="form-control" id="correo" defaultValue={this.state.editCorreo} onChange={this.handleChangeCorreo} value={this.state.value} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="numero_documento" className="col-form-label">Numero documento:</label>
-                                <input type="text" className="form-control" id="numero_documento" />
+                                <input type="text" className="form-control" id="numero_documento" defaultValue={this.state.editNumeroDocumento} onChange={this.handleChangeCedula} value={this.state.value} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="nombres" className="col-form-label">Nombres:</label>
-                                <input type="text" className="form-control" id="nombres" />
+                                <input type="text" className="form-control" id="nombres" defaultValue={this.state.editNombres} onChange={this.handleChangeNombres} value={this.state.value} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="apellidos" className="col-form-label">Apellidos:</label>
-                                <input type="text" className="form-control" id="apellidos" />
+                                <input type="text" className="form-control" id="apellidos" defaultValue={this.state.editApellidos} onChange={this.handleChangeApellido} value={this.state.value} />
                             </div>
                         </form>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={this.handleModal2}>Cancelar</Button>
-                        <Button variant="primary" onClick={() => this.select(this.state.id_cliente)}>Continuar</Button>
+                        <Button variant="primary" onClick={() => this.select2()}>Continuar</Button>
                     </Modal.Footer>
                 </Modal>
 
