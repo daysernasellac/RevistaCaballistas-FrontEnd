@@ -1,9 +1,6 @@
 import React from 'react'
-import '../../styles/Login.css'
-import userIcon from '../../images/avatar2.png'
+import '../../styles/createPassword.css'
 import candadoIcon from '../../images/restricted.png'
-import { Link } from 'react-router-dom'
-import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 
 
@@ -60,7 +57,7 @@ class createPassword extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        if (this.state.confContrasena === this.state.contrasena) {
+        if (this.state.confContrasena == this.state.contrasena) {
             const inf = {
                 correo: localStorage.getItem('Electronico'),
                 contrasena: this.state.contrasena,
@@ -68,7 +65,7 @@ class createPassword extends React.Component {
             };
             axios.post(`http://localhost:8030/api/register/finalizarRegistro`, { inf })
                 .then((res) => {
-                    if (res.status === 200) {
+                    if (res.status == 200) {
                         this.buscarUsuario();
                     }
                 })
@@ -102,19 +99,15 @@ class createPassword extends React.Component {
 
     render() {
         return (
-            <div className="container-fluid wrapper2">
+            <div className="wrapper2">
                 <div className="container contenedorAll">
-
                     <h1 className="containerLink">
                         <a href="https://www.revistacaballistas.com/" title="Revista Caballistas" className="linkHome"></a>
                     </h1>
-
                     <div className="container-fluid contenedorMain">
                         <div className="container contenedorForm">
                             <h3 className="tituloForm">Establece tu contraseña</h3>
-
                             <form className="formularioLogin" onSubmit={this.handleSubmit}>
-
                                 <div className="col-sm-12 my-1 groupInputLogin groupEmail">
                                     <label htmlFor="labelEmail" ><b>Constraseña</b><span className="obligatorio">*</span></label>
                                     <div className="input-group">
@@ -124,7 +117,6 @@ class createPassword extends React.Component {
                                         <input type="password" className={this.state.nombreStateError} id="labelEmail" placeholder="Nueva contraseña" required="true" onChange={this.handleChangeContrase} value={this.state.value} />
                                     </div>
                                 </div>
-                                <hr className="separador" />
                                 <div className="col-sm-12 my-1 groupInputLogin groupContrasena">
                                     <label htmlFor="inputContrasenaLogin" ><b>Confirme contraseña</b><span className="obligatorio">*</span></label>
                                     <div className="input-group">
@@ -143,7 +135,6 @@ class createPassword extends React.Component {
                                 </div>
                             </form>
                         </div>
-
                     </div>
                 </div>
             </div>

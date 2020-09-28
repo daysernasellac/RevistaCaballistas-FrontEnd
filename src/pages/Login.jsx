@@ -174,21 +174,15 @@ class Login extends React.Component {
 	render() {
 		return (
 		<div className="wrapper2">
-		<div className="container alerts">
-			<div className={this.state.alertState} role="alert">
-			{this.state.mensajeErrorLogin}
-			<button
-				type="button"
-				className="close"
-				data-dismiss="alert"
-				aria-label="Close"
-				onClick={this.changeStateAlert}
-			>
-				<span aria-hidden="true">&times;</span>
-			</button>
-		</div>
+      <div className="container alerts">
+        <div className={this.state.alertState} role="alert">
+          {this.state.mensajeErrorLogin}
+          <button	type="button"	className="close"	data-dismiss="alert"	aria-label="Close" onClick={this.changeStateAlert}>
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-        <div className="container contenedorAll">
+      </div>
+      <div className="container contenedorAll">
 			<h1 className="containerLink">
             <a
               href="https://www.revistacaballistas.com/"
@@ -200,7 +194,7 @@ class Login extends React.Component {
 
         <div className="container-fluid contenedorMain">
           <div className="container contenedorForm">
-            <h3 className="tituloForm">Ingrese a su cuenta</h3>
+            <h3 className="tituloForm">Iniciar sesión</h3>
             <form
               className="formularioLogin"
               autoComplete="off"
@@ -208,9 +202,6 @@ class Login extends React.Component {
               method="POST"
             >
               <div className="col-sm-12 my-1 groupInputLogin groupEmail separador">
-                <label htmlFor="labelEmail">
-                  <b>Email</b>
-                </label>
                 <div className="input-group">
                   <div className="input-group-prepend">
                     <div className="input-group-text">
@@ -221,7 +212,7 @@ class Login extends React.Component {
                     type="text"
                     className={this.state.loginStateError}
                     id="labelEmail"
-                    placeholder="Email"
+                    placeholder="Correo electrónico"
                     onChange={this.handleChangeUser}
                     value={this.state.value}
                   />
@@ -229,9 +220,6 @@ class Login extends React.Component {
               </div>
 
               <div className="col-sm-12 my-1 groupInputLogin groupContrasena separador">
-                <label htmlFor="inputContrasenaLogin">
-                  <b>Contraseña</b>
-                </label>
                 <div className="input-group">
                   <div className="input-group-prepend">
                     <div className="input-group-text">
@@ -263,7 +251,7 @@ class Login extends React.Component {
             </form>
             <div className="container-fluid footerLogin">
               <p>
-                Aún no tienes una cuenta?{" "}
+                ¿Aún no tiene una cuenta?{" "}
                 <Link to="/Registro">
                   <b className="linkRegistroLogin">Regístrate</b>
                 </Link>
