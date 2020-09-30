@@ -93,7 +93,7 @@ class Registro2 extends React.Component {
                 console.log(error)
             });
 
-        axios.get('http://localhost:8030/api/core/departamentos')
+        axios.get(process.env.URL_API + '/core/departamentos')
             .then(res => {
                 const listaDepartamentos = res.data;
                 this.setState({ listaDepartamentos });
