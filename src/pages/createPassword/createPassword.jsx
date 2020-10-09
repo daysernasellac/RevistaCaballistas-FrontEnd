@@ -43,7 +43,7 @@ class createPassword extends React.Component {
         this.setState({ correo });
         axios.get(`http://localhost:8030/api/register/informacionCliente/correo/${correo}`)
             .then(res => {
-                if (res.data == "") {
+                if (res.data === "") {
                     console.log("correo no existe")
                 } else {
                     const id_cliente = res.data[0].cliente;
@@ -57,7 +57,7 @@ class createPassword extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        if (this.state.confContrasena == this.state.contrasena) {
+        if (this.state.confContrasena === this.state.contrasena) {
             const inf = {
                 correo: localStorage.getItem('Electronico'),
                 contrasena: this.state.contrasena,
@@ -65,7 +65,7 @@ class createPassword extends React.Component {
             };
             axios.post(`http://localhost:8030/api/register/finalizarRegistro`, { inf })
                 .then((res) => {
-                    if (res.status == 200) {
+                    if (res.status === 200) {
                         this.buscarUsuario();
                     }
                 })
@@ -80,7 +80,7 @@ class createPassword extends React.Component {
     buscarUsuario() {
         axios.get(`http://localhost:8030/api/register/informacionClienteById/${this.state.id_cliente}`)
             .then(res => {
-                if (res.data == "") {
+                if (res.data === "") {
                     console.log("usuario")
                 } else {
                     localStorage.setItem('Nombre', res.data.nombres);
