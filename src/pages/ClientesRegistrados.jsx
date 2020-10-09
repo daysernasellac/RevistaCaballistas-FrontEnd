@@ -2,10 +2,8 @@ import React from 'react'
 import '../styles/ClientesRegistrados.css'
 import NavBar from '../components/NavBar'
 import axios from 'axios'
-import { Modal, Button, Form } from 'react-bootstrap'
-import iconDelete from '../images/trash.png'
-import { MDBDataTableV5, MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
-import $ from 'jquery';
+import { Modal, Button } from 'react-bootstrap'
+import environment from '../environments';
 
 
 class ClientesRegistrados extends React.Component {
@@ -50,9 +48,9 @@ class ClientesRegistrados extends React.Component {
         this.setState({ navActive });
         this.setState({ nombreUser });
         this.setState({ correo });
-        axios.get(`http://localhost:8030/api/register/informacionCliente/correo/${correo}`)
+        axios.get(environment.apiUrl +`/register/informacionCliente/correo/${correo}`)
             .then(res => {
-                if (res.data == "") {
+                if (res.data === "") {
                     console.log("correo no existe")
                 } else {
                     const tipo_usuario = res.data[0].tipo_usuario;
@@ -71,7 +69,7 @@ class ClientesRegistrados extends React.Component {
 
 
     select(id) {
-        axios.post(`http://localhost:8030/api/register/deleteUsuarioById/${id}`)
+        axios.post(environment.apiUrl + `/register/deleteUsuarioById/${id}`)
             .then(res => {
                 this.buscarUsuarios()
                 this.setState({
@@ -93,7 +91,7 @@ class ClientesRegistrados extends React.Component {
         }
 
 
-        axios.post(`http://localhost:8030/api/register/updateUser`, datos)
+        axios.post(environment.apiUrl + `/register/updateUser`, datos)
             .then(res => {
                 this.buscarUsuarios()
                 this.setState({
@@ -106,7 +104,7 @@ class ClientesRegistrados extends React.Component {
     }
 
     buscarUsuarios() {
-        axios.get('http://localhost:8030/api/register/findInfoUsuarioById')
+        axios.get(environment.apiUrl + '/register/findInfoUsuarioById')
             .then(res => {
                 const listaClientes = res.data;
                 this.setState({ listaClientes });

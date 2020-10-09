@@ -1,5 +1,5 @@
 const environment = {
-    apiUrl: "heroku"
+    apiUrl: "http://localhost:8030/api"
 }
 
 export default environment ;

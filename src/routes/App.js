@@ -3,7 +3,7 @@ import Login from './../pages/Login';
 import Registro2 from '../pages/Registro2';
 import pass from '../pages/createPassword/createPassword';
 import confirmacionCorreo from '../pages/ConfirmarcionEmail'
-import {BrowserRouter, Swith, Route} from 'react-router-dom'
+import {BrowserRouter, Route} from 'react-router-dom'
 import ClientesRegistrados from '../pages/ClientesRegistrados';
 import PagosRealizados from '../pages/PagosRealizados';
 

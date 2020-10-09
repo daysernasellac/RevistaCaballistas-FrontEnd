@@ -1,9 +1,8 @@
-import React from 'react'
-import '../styles/ClientesRegistrados.css'
-import NavBar from '../components/NavBar'
-import axios from 'axios'
-
-import { environment } from '../environments/environment'
+import React from 'react';
+import '../styles/ClientesRegistrados.css';
+import NavBar from '../components/NavBar';
+import axios from 'axios';
+import environment from '../environments';
 class PagosRealizados extends React.Component {
 
     constructor(props) {
@@ -25,7 +24,7 @@ class PagosRealizados extends React.Component {
         this.setState({ nombreUser });
         this.setState({ correo });
 
-        axios.get('http://localhost:8030/pagos/findPagos')
+        axios.get(environment.apiUrl + 'pagos/findPagos')
             .then(res => {
                 const listaPagos = res.data;
                 console.log(res.data)

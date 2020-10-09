@@ -2,7 +2,7 @@ import React from 'react'
 import '../../styles/createPassword.css'
 import candadoIcon from '../../images/restricted.png'
 import axios from 'axios';
-
+import environment from '../../environments';
 
 class createPassword extends React.Component {
 
@@ -41,7 +41,7 @@ class createPassword extends React.Component {
     componentDidMount() {
         const correo = localStorage.getItem('Electronico');
         this.setState({ correo });
-        axios.get(`http://localhost:8030/api/register/informacionCliente/correo/${correo}`)
+        axios.get(environment.apiUrl + `/register/informacionCliente/correo/${correo}`)
             .then(res => {
                 if (res.data === "") {
                     console.log("correo no existe")
@@ -63,7 +63,7 @@ class createPassword extends React.Component {
                 contrasena: this.state.contrasena,
                 tipo_estado: 1
             };
-            axios.post(`http://localhost:8030/api/register/finalizarRegistro`, { inf })
+            axios.post(environment.apiUrl + `/register/finalizarRegistro`, { inf })
                 .then((res) => {
                     if (res.status === 200) {
                         this.buscarUsuario();
@@ -78,7 +78,7 @@ class createPassword extends React.Component {
     }
 
     buscarUsuario() {
-        axios.get(`http://localhost:8030/api/register/informacionClienteById/${this.state.id_cliente}`)
+        axios.get(environment.apiUrl + `/register/informacionClienteById/${this.state.id_cliente}`)
             .then(res => {
                 if (res.data === "") {
                     console.log("usuario")

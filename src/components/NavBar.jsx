@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
+import environment from '../environments';
 
 class NavBar extends React.Component {
 
@@ -64,7 +65,7 @@ class NavBar extends React.Component {
                     id_usuario: localStorage.getItem('IdUsuario'),
                     contrasena: this.state.contrasenaNueva
                 };
-                axios.post(`http://localhost:8030/api/password/cambiarContrasena`, body)
+                axios.post(environment.apiUrl + '/password/cambiarContrasena', body)
                     .then(res => {
                         this.setState({
                             contrasenaActualaStateError: 'form-control is-valid'

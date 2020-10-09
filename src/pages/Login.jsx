@@ -4,13 +4,8 @@ import candadoIcon from "../images/restricted.png";
 import { Link } from "react-router-dom";
 import { Modal, Button, Form } from "react-bootstrap";
 import axios from "axios";
-import ReactDOM from "react-dom";
-import { Redirect } from "react-router-dom";
-import { withRouter } from "react-router-dom";
-// import { Alert } from 'reactstrap';
-import { MDBContainer, MDBAlert } from "mdbreact";
-import Alert from "react-bootstrap/Alert";
-import React, { useState } from "react";
+import React from "react";
+import environment from '../environments';
 
 class Login extends React.Component {
   constructor(props) {
@@ -60,7 +55,7 @@ class Login extends React.Component {
       correo: this.state.correoOlvidar,
     };
     axios
-      .post(`http://localhost:8030/api/email/olvidastePassword`, body)
+      .post(environment.apiUrl + `/email/olvidastePassword`, body)
       .then((res) => {
         this.setState({
           alertState: "alert alert-success alert-dismissible fade show",
@@ -84,7 +79,7 @@ class Login extends React.Component {
     };
 
     axios
-      .post(`http://localhost:8030/api/login/login`, { datos })
+      .post(environment.apiUrl + `/login/login`, { datos })
       .then((res) => {
         if (res.data === "") {
           this.setState({ loginStateError: "form-control is-invalid" });
@@ -115,10 +110,10 @@ class Login extends React.Component {
   buscarUsuario() {
     axios
       .get(
-        `http://localhost:8030/api/register/informacionCliente/correo/${this.state.correo}`
+        environment.apiUrl + `/register/informacionCliente/correo/${this.state.correo}`
       )
       .then((res) => {
-        if (res.data == "") {
+        if (res.data === "") {
           console.log("usuario");
         } else {
           let obj = res.data;
@@ -127,7 +122,7 @@ class Login extends React.Component {
 
           axios
             .get(
-              `http://localhost:8030/api/register/informacionClienteById/${obj[0]["cliente"]}`
+              environment.apiUrl + `/register/informacionClienteById/${obj[0]["cliente"]}`
             )
             .then((res) => {
               this.setState({ nombre: res.data.nombres });
@@ -156,7 +151,7 @@ class Login extends React.Component {
   buscarNombre(id_cliente) {
     axios
       .get(
-        `http://localhost:8030/api/register/informacionClienteById/${id_cliente}`
+        environment.apiUrl + `/register/informacionClienteById/${id_cliente}`
       )
       .then((res) => {
         debugger;
@@ -173,34 +168,25 @@ class Login extends React.Component {
 
 	render() {
 		return (
-		<div className="wrapper2">
-      <div className="container alerts">
-        <div className={this.state.alertState} role="alert">
-          {this.state.mensajeErrorLogin}
-          <button	type="button"	className="close"	data-dismiss="alert"	aria-label="Close" onClick={this.changeStateAlert}>
-            <span aria-hidden="true">&times;</span>
-          </button>
+      <div className="wrapper2">
+        <div className="container alerts">
+          <div className={this.state.alertState} role="alert">
+            {this.state.mensajeErrorLogin}
+            <button	type="button"	className="close"	data-dismiss="alert"	aria-label="Close" onClick={this.changeStateAlert}>
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
         </div>
-      </div>
-      <div className="container contenedorAll">
-			<h1 className="containerLink">
-            <a
-              href="https://www.revistacaballistas.com/"
-              title="Revista Caballistas"
-              className="linkHome"
-            ></a>
+        <div className="container contenedorAll">
+          <h1 className="containerLink">
+            <a href="https://www.revistacaballistas.com/" title="Revista Caballistas" className="linkHome"/>
           </h1>
         </div>
 
         <div className="container-fluid contenedorMain">
           <div className="container contenedorForm">
             <h3 className="tituloForm">Iniciar sesión</h3>
-            <form
-              className="formularioLogin"
-              autoComplete="off"
-              action="/Registro"
-              method="POST"
-            >
+            <form className="formularioLogin" autoComplete="off" action="/Registro" method="POST">
               <div className="col-sm-12 my-1 groupInputLogin groupEmail separador">
                 <div className="input-group">
                   <div className="input-group-prepend">
@@ -208,86 +194,77 @@ class Login extends React.Component {
                       <img src={userIcon} alt="user" width="18px" />
                     </div>
                   </div>
-                  <input
-                    type="text"
-                    className={this.state.loginStateError}
-                    id="labelEmail"
-                    placeholder="Correo electrónico"
-                    onChange={this.handleChangeUser}
-                    value={this.state.value}
-                  />
+                  <input type="text" className={this.state.loginStateError} id="labelEmail" placeholder="Correo electrónico" onChange={this.handleChangeUser} value={this.state.value} />
                 </div>
               </div>
-
               <div className="col-sm-12 my-1 groupInputLogin groupContrasena separador">
                 <div className="input-group">
-                  <div className="input-group-prepend">
-                    <div className="input-group-text">
-                      <img src={candadoIcon} alt="candado" width="18px" />
+                    <div className="input-group-prepend">
+                      <div className="input-group-text">
+                        <img src={candadoIcon} alt="candado" width="18px" />
+                      </div>
                     </div>
+                    <input
+                      type="password"
+                      aria-describedby="numeroHelp"
+                      className={this.state.loginStateError}
+                      id="inputContrasenaLogin"
+                      placeholder="Contraseña"
+                      onChange={this.handleChangePass}
+                      value={this.state.value}
+                    />
                   </div>
-                  <input
-                    type="password"
-                    aria-describedby="numeroHelp"
-                    className={this.state.loginStateError}
-                    id="inputContrasenaLogin"
-                    placeholder="Contraseña"
-                    onChange={this.handleChangePass}
-                    value={this.state.value}
-                  />
-                </div>
               </div>
 
               <div className="col text-center submitContenedorLogin separador">
-                <button
-                  type="submit"
-                  to="/Registro"
-                  className="btn btn-primary btn-lg btn-block btn-dark submitLogin"
-                  onClick={this.login}
-                >
-                  Ingresar
-                </button>
+                  <button
+                    type="submit"
+                    to="/Registro"
+                    className="btn btn-primary btn-lg btn-block btn-dark submitLogin"
+                    onClick={this.login}
+                  >
+                    Ingresar
+                  </button>
+                </div>
+              </form>
+              <div className="container-fluid footerLogin">
+                <p> ¿Aún no tiene una cuenta?{" "}
+                  <Link to="/Registro">
+                    <b className="linkRegistroLogin">Regístrate</b>
+                  </Link>
+                </p>
               </div>
-            </form>
-            <div className="container-fluid footerLogin">
-              <p>
-                ¿Aún no tiene una cuenta?{" "}
-                <Link to="/Registro">
-                  <b className="linkRegistroLogin">Regístrate</b>
-                </Link>
-              </p>
             </div>
-          </div>
-          <p className="textContrasena" onClick={this.handleModal}>
-            ¿Olvidaste tu contraseña?
-          </p>
-          <Modal show={this.state.show} onHide={this.handleModal}>
-            <Modal.Header closeButton>
-              <b>Restablecer la contraseña</b>
-            </Modal.Header>
-            <Modal.Body>
-              Ingrese su dirección de correo electrónico a continuación y le
-              enviaremos un enlace para restablecer su contraseña.
-              <Form className="formModal">
-                <Form.Group controlId="formBasicEmail">
-                  <Form.Label>Email address</Form.Label>
-                  <Form.Control
-                    type="email"
-                    className={this.state.loginStateError}
-                    placeholder="Ingresa email"
-                    onChange={this.handleChangePassForg}
-                    value={this.state.value}
-                  />
-                </Form.Group>
-                <Button
-                  className="btn-dark submitModal"
-                  onClick={this.olvidasteContrasena}
-                >
-                  Enviar
-                </Button>
-              </Form>
-            </Modal.Body>
-          </Modal>
+            <p className="textContrasena" onClick={this.handleModal}>
+              ¿Olvidaste tu contraseña?
+            </p>
+            <Modal show={this.state.show} onHide={this.handleModal}>
+              <Modal.Header closeButton>
+                <b>Restablecer la contraseña</b>
+              </Modal.Header>
+              <Modal.Body>
+                Ingrese su dirección de correo electrónico a continuación y le
+                enviaremos un enlace para restablecer su contraseña.
+                <Form className="formModal">
+                  <Form.Group controlId="formBasicEmail">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control
+                      type="email"
+                      className={this.state.loginStateError}
+                      placeholder="Ingresa email"
+                      onChange={this.handleChangePassForg}
+                      value={this.state.value}
+                    />
+                  </Form.Group>
+                  <Button
+                    className="btn-dark submitModal"
+                    onClick={this.olvidasteContrasena}
+                  >
+                    Enviar
+                  </Button>
+                </Form>
+              </Modal.Body>
+            </Modal>
         </div>
       </div>
     );

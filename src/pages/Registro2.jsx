@@ -1,11 +1,11 @@
 import React from 'react'
 import '../styles/Registro2.css'
 import logoBlanco from '../images/logo_blanco.png'
-import { Link, Redirect } from 'react-router-dom'
+import { Link} from 'react-router-dom'
 import InputMask from 'react-input-mask';
 import axios from 'axios';
-import { Modal, Button, Form } from 'react-bootstrap';
-import environment from '../environments'
+import { Modal } from 'react-bootstrap';
+import environment from '../environments';
 
 class Registro2 extends React.Component {
 
@@ -84,7 +84,6 @@ class Registro2 extends React.Component {
 
         document.title = "Registro"
 
-        console.log(environment.apiUrl);
         axios.get(environment.apiUrl + '/core/tipoDocumentos')
             .then(res => {
                 const tipoDocumentos = res.data;
@@ -155,10 +154,13 @@ class Registro2 extends React.Component {
 
     onClickDepartamentosSelect(event) {
         if (event.target.value !== "0") {
+            console.log(event.target.value);
             this.setState({
                 departamentoId: event.target.value
+                
             })
-            axios.get(`http://localhost:8030/api/core/municipios/${event.target.value}`)
+
+            axios.get(environment.apiUrl + `/core/municipios/${event.target.value}`)
                 .then(res => {
                     const listaMunicipios = res.data;
                     this.setState({ listaMunicipios });
@@ -225,9 +227,9 @@ class Registro2 extends React.Component {
             this.state.ciudad !== ''
         ) {
             event.preventDefault()
-            axios.get(`http://localhost:8030/api/register/informacionCliente/${this.state.tipoDocumento}&${this.state.numeroDocumento}`)
+            axios.get(environment.apiUrl + `/register/informacionCliente/${this.state.tipoDocumento}&${this.state.numeroDocumento}`)
                 .then(res => {
-                    if (res.data == "") {
+                    if (res.data === "") {
                         this.correo(this.state.nombres, this.state.apellidos, this.state.email, this.state.numeroContacto, this.state.direccion, this.state.tipoDocumento,
                             this.state.numeroDocumento, this.state.departamento, this.state.ciudad)
                     } else {
@@ -242,9 +244,10 @@ class Registro2 extends React.Component {
     }
 
     correo(nombres, apellidos, correo, telefono, dirrecion, id_tipo_documento, numero_documento, id_departamento, id_municipio) {
-        axios.get(`http://localhost:8030/api/register/informacionCliente/correo/${correo}`)
+       debugger;
+        axios.get(environment.apiUrl + `/register/informacionCliente/correo/${correo}`)
             .then(res => {
-                if (res.data == "") {
+                if (res && res.data && res.data.length === 0) {
                     this.registro(nombres, apellidos, correo, telefono, dirrecion, id_tipo_documento, numero_documento, id_departamento, id_municipio);
                 } else {
                     this.setState({ emailStateError: "form-control is-invalid" })
@@ -270,7 +273,7 @@ class Registro2 extends React.Component {
             correo: correo
         };
 
-        axios.post(`http://localhost:8030/api/register/`, { user })
+        axios.post(environment.apiUrl + `/register/`, { user })
             .then(res => {
                 if (res.status === 200) {
                     localStorage.setItem('Electronico', correo)
@@ -288,7 +291,7 @@ class Registro2 extends React.Component {
         const body = {
             correo
         };
-        axios.post(`http://localhost:8030/api/email/verificar`, body)
+        axios.post(environment.apiUrl + `/email/verificar`, body)
             .then(res => {
                 console.log("Mensaje enviado")
             })
@@ -386,14 +389,12 @@ class Registro2 extends React.Component {
                         numeroStateError: 'form-control',
                         formatoNumero: "999-9999",
                         mensajeErrorCelular: '',
-                        numeroStateError: 'form-control'
                     })
                 } else {
                     this.setState({
                         numeroStateError: 'form-control',
                         formatoNumero: "999-999-9999",
                         mensajeErrorCelular: '',
-                        numeroStateError: 'form-control'
                     })
                 }
             } else {
