@@ -1,5 +1,5 @@
 const environment = {
-    apiUrl = "heroku"
+    apiUrl : "https://caballistas.herokuapp.com/api/"
 }
 
-export { environment };
+export default environment ;

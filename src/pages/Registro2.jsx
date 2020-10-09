@@ -5,7 +5,7 @@ import { Link, Redirect } from 'react-router-dom'
 import InputMask from 'react-input-mask';
 import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
-
+import environment from '../environments'
 
 class Registro2 extends React.Component {
 
@@ -84,7 +84,8 @@ class Registro2 extends React.Component {
 
         document.title = "Registro"
 
-        axios.get('http://localhost:8030/api/core/tipoDocumentos')
+        console.log(environment.apiUrl);
+        axios.get(environment.apiUrl + '/core/tipoDocumentos')
             .then(res => {
                 const tipoDocumentos = res.data;
                 this.setState({ tipoDocumentos });
@@ -93,7 +94,7 @@ class Registro2 extends React.Component {
                 console.log(error)
             });
 
-        axios.get(process.env.URL_API + '/core/departamentos')
+        axios.get(environment.apiUrl + '/core/departamentos')
             .then(res => {
                 const listaDepartamentos = res.data;
                 this.setState({ listaDepartamentos });
@@ -104,24 +105,24 @@ class Registro2 extends React.Component {
     }
 
     parseTipoDocumento(tipoDocumentos) {
-        // if (tipoDocumentos.length > 0) {
-        //     return tipoDocumentos.map(function (tipoDocumento, index) {
-        //         return (
-        //             <option key={index} value={tipoDocumento.id_tipo_documento}>{tipoDocumento.abreviatura}</option>
-        //         )
-        //     })
-        // }
+        if (tipoDocumentos.length > 0) {
+            return tipoDocumentos.map(function (tipoDocumento, index) {
+                return (
+                    <option key={index} value={tipoDocumento.id_tipo_documento}>{tipoDocumento.abreviatura}</option>
+                )
+            })
+        }
     }
 
     parseDepartamentos(departamentos) {
-        // if (departamentos.length > 0) {
-        //     return departamentos.map(function (departamento, index) {
-        //         return (
-        //             <option key={index} value={departamento.id_departamento} >{departamento.nombre_departamento}</option>
+        if (departamentos.length > 0) {
+            return departamentos.map(function (departamento, index) {
+                return (
+                    <option key={index} value={departamento.id_departamento} >{departamento.nombre_departamento}</option>
 
-        //         )
-        //     })
-        // }
+                )
+            })
+        }
     }
 
     parseMunicipios(municipios) {

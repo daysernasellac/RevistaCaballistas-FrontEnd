@@ -2,4 +2,4 @@ const environment = {
     apiUrl: "heroku"
 }
 
-export { environment };
+export default environment ;
