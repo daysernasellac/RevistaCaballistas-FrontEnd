@@ -104,24 +104,24 @@ class Registro2 extends React.Component {
     }
 
     parseTipoDocumento(tipoDocumentos) {
-        if (tipoDocumentos.length > 0) {
-            return tipoDocumentos.map(function (tipoDocumento, index) {
-                return (
-                    <option key={index} value={tipoDocumento.id_tipo_documento}>{tipoDocumento.abreviatura}</option>
-                )
-            })
-        }
+        // if (tipoDocumentos.length > 0) {
+        //     return tipoDocumentos.map(function (tipoDocumento, index) {
+        //         return (
+        //             <option key={index} value={tipoDocumento.id_tipo_documento}>{tipoDocumento.abreviatura}</option>
+        //         )
+        //     })
+        // }
     }
 
     parseDepartamentos(departamentos) {
-        if (departamentos.length > 0) {
-            return departamentos.map(function (departamento, index) {
-                return (
-                    <option key={index} value={departamento.id_departamento} >{departamento.nombre_departamento}</option>
+        // if (departamentos.length > 0) {
+        //     return departamentos.map(function (departamento, index) {
+        //         return (
+        //             <option key={index} value={departamento.id_departamento} >{departamento.nombre_departamento}</option>
 
-                )
-            })
-        }
+        //         )
+        //     })
+        // }
     }
 
     parseMunicipios(municipios) {
