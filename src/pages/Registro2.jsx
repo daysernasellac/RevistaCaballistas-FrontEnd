@@ -479,7 +479,7 @@ class Registro2 extends React.Component {
                         </div>
                     </div>
                     <div className="container textHeader">
-                        <h4><b>Regístrese gratis y obtén tu Revista! amaya rama push</b></h4>
+                        <h4><b>Regístrese gratis y obtén tu Revista! prueba</b></h4>
                     </div>
 
                     <form className="formularioContenedor" autoComplete="off" onSubmit={this.handleSubmit}>
