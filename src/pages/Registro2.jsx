@@ -227,6 +227,7 @@ class Registro2 extends React.Component {
             this.state.ciudad !== ''
         ) {
             event.preventDefault()
+            debugger;
             axios.get(environment.apiUrl + `/register/informacionCliente/${this.state.tipoDocumento}&${this.state.numeroDocumento}`)
                 .then(res => {
                     if (res.data === "") {
