@@ -90,7 +90,7 @@ class Registro2 extends React.Component {
                 this.setState({ tipoDocumentos });
             })
             .catch(error => {
-                console.log(error)
+                console.log('esto es un error', error);
             });
 
         axios.get(environment.apiUrl + '/core/departamentos')
