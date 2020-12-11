@@ -66,6 +66,7 @@ class createPassword extends React.Component {
             axios.post(environment.apiUrl + `/register/finalizarRegistro`, { inf })
                 .then((res) => {
                     if (res.status === 200) {
+                        debugger;
                         this.buscarUsuario();
                     }
                 })
