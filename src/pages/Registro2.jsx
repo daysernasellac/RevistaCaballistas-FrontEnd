@@ -227,7 +227,8 @@ class Registro2 extends React.Component {
             this.state.ciudad !== ''
         ) {
             event.preventDefault()
-            debugger;
+            
+
             axios.get(environment.apiUrl + `/register/informacionCliente/${this.state.tipoDocumento}&${this.state.numeroDocumento}`)
                 .then(res => {
                     if (res.data === "") {
@@ -245,7 +246,6 @@ class Registro2 extends React.Component {
     }
 
     correo(nombres, apellidos, correo, telefono, dirrecion, id_tipo_documento, numero_documento, id_departamento, id_municipio) {
-       debugger;
         axios.get(environment.apiUrl + `/register/informacionCliente/correo/${correo}`)
             .then(res => {
                 if (res && res.data && res.data.length === 0) {
@@ -277,7 +277,8 @@ class Registro2 extends React.Component {
         axios.post(environment.apiUrl + `/register/`, { user })
             .then(res => {
                 if (res.status === 200) {
-                    localStorage.setItem('Electronico', correo)
+                    localStorage.setItem('Electronico', correo);
+                    this.setState({ usuario: user })
                     this.enviarCorreo(correo);
                     window.location.href= '/registro/confirmarCorreo';
                 }
@@ -519,11 +520,11 @@ class Registro2 extends React.Component {
                                     {this.state.mensajeErrorCelular}
                                 </div>
                                 <small id="numeroHelp" className="form-text text-muted">
-                                    Ingrese su celular ó telefono fijo
+                                    Ingrese su celular ó teléfono fijo
                                 </small>
                             </div>
                             <div className="form-group">
-                                <label htmlFor="inputDireccion">Direccion residencial <span className="obligatorio">*</span></label>
+                                <label htmlFor="inputDireccion">Dirección residencial <span className="obligatorio">*</span></label>
                                 <input type="text" className={this.state.direccionStateError} id="inputDireccion" placeholder="Direccion residencial" onChange={this.handleChangeDireccion} value={this.state.value} onBlur={this.handleDireccionValidation} />
                                 <div className="invalid-feedback">
                                     {this.state.mensajeErrorDireccion}
